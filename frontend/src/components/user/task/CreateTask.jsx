@@ -4,7 +4,7 @@ function CreateTask(){
     return(
         <div class="w-full h-screen flex flex-col items-center justify-center">
             <div class="w-full px-40">
-                <BackButton />
+                <BackButton path="/task"/>
             </div>
             <div class="w-full flex justify-center items-center pt-5">
                 <h1 class="text-2xl font-bold">Create New Task</h1>
