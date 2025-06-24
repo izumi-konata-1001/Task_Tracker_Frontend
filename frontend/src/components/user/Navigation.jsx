@@ -21,6 +21,9 @@ function Navigation(){
             <div className="h-full flex-1 flex items-center justify-center transition duration-300 hover:text-dark rounded">
                 <Link to="/issue" className="w-full text-center">Issues</Link>
             </div>
+            <div className="h-full flex-1 flex items-center justify-center transition duration-300 hover:text-dark rounded">
+                <Link to="/pomodoro" className="w-full text-center">Pomodoro</Link>
+            </div>
             <div class="cursor-pointer w-1/6 text-right hover:text-dark">
                 <label onClick={handleLogout} class="cursor-pointer pr-10">Logout</label>
             </div>

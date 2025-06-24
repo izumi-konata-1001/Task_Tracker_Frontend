@@ -21,6 +21,10 @@ import AllIssues from '../components/user/issue/AllIssues';
 import IssueDetail from '../components/user/issue/IssueDetail';
 import CreateIssue from '../components/user/issue/CreateIssue';
 
+import Pomodoro from '../pages/logged_in/Pomodoro';
+import Workbench from '../components/user/pomodoro/PomodoroWorkbench';
+import AllSessions from '../components/user/pomodoro/AllSessions'
+
 const router = createBrowserRouter([
     {
         path:'/',
@@ -75,6 +79,18 @@ const router = createBrowserRouter([
             {path:'detail/:id', element:<IssueDetail />},
             {path:'create', element:<CreateIssue />},
         ]
+    },
+    {
+        path:'/pomodoro',
+        element:(
+            <ProtectedRoute>
+                <Pomodoro />
+            </ProtectedRoute>
+        ),
+        children:[
+            {index:true, element:<Workbench />},
+            {path:'all_sessions', element:<AllSessions />}
+        ],
     },
 ]);
 
