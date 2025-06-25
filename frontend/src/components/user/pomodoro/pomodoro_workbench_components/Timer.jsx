@@ -267,7 +267,7 @@ function Timer(props) {
                             </div>
                             <div class="w-full flex justify-center items-center">
                                 <button type="button" onClick={handleCancel}
-                                disable={!cancelAvaliable}
+                                disabled={!cancelAvaliable}
                                 class={`w-full h-10 rounded-xl
                                 ${cancelAvaliable ?(
                                     ' bg-primary border-3 border-primary  text-white text-xl hover:bg-white hover:text-primary'
@@ -294,7 +294,7 @@ function Timer(props) {
 
                         </div>
                     </div>
-                    <div class="w-full flex flex-col pt-5 space-y-1">
+                    <div class="w-full flex flex-col pt-5 space-y-1 px-40">
                         <p class="flex justify-between">
                             <label class="text-base text-dark">Start Time: </label>
                             {startTime ? (

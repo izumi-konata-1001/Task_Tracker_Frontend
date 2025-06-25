@@ -4,7 +4,7 @@ import BASE_URL from '../../../utils/api';
 import { useAuth } from '../../../context/AuthContext';
 
 import TaskCard from './all_tasks_components/TaskCard';
-import FilterButton from '../FilterButton';
+import OrderSortButton from '../OrderSortButton';
 import CreateButton from '../CreateButton';
 function AllTasks(){
     const {token} = useAuth();
@@ -68,7 +68,7 @@ function AllTasks(){
                 <CreateButton section={"task"}/>
             </div>
             <div class="w-full flex justify-center items-center pt-5">
-                <FilterButton handleClick={handleClick} order={order} />
+                <OrderSortButton handleClick={handleClick} order={order} />
             </div>
             <div class="w-full pt-5 px-20 flex flex-col space-y-3">
                 {tasks.length > 0 ? (

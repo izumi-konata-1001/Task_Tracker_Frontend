@@ -4,7 +4,7 @@ import BASE_URL from '../../../utils/api';
 import { useAuth } from '../../../context/AuthContext';
 
 import CreateButton from "../CreateButton";
-import FilterButton from "../FilterButton";
+import FilterButton from "../OrderSortButton";
 import IssueCard from "./all_issues_components/IssueCard";
 
 function AllIssues(){

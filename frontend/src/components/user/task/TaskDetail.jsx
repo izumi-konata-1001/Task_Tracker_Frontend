@@ -8,6 +8,7 @@ import RedirectAfter from "../../RedirectAfter";
 import BackButton from "../../BackButton";
 import TaskInformation from "./task_detail_components/TaskInfomation";
 import EditTaskForm from "./task_detail_components/EditTaskForm";
+import SessionCard from "./task_detail_components/SessionCard";
 
 function TaskDetail(){
     const {token} = useAuth();
@@ -15,9 +16,11 @@ function TaskDetail(){
 
     const [showRedirect, setShowRedirect] = useState(false);
     const [message,setMessage] = useState("");
+    const [sessionMessage, setSessionMessage] = useState("");
 
     const [task,setTask] = useState("");
     const [issue,setIssue] = useState("")
+    const [sessions, setSessions] = useState([]);
     const [showEditTask, setShowEditTask] = useState(false);
 
     const fetchTaskDetail = async ()=>{
@@ -42,6 +45,7 @@ function TaskDetail(){
             if(response.ok){
                 setIssue(result.issue);
                 setTask(result.task);
+                setSessions(result.sessions);
                 console.log('Fetch task detial and issue successfully');
                 return;
             }else{
@@ -106,15 +110,30 @@ function TaskDetail(){
     },[]);
 
     return(
-        <div class="w-full h-screen flex flex-col items-center justify-center">
+        <div class="w-full pb-10 pt-10 flex flex-col items-center justify-center">
             <div class="w-full px-30">
                 <BackButton path={"/task"} />
             </div>
-            <div class="w-full flex justify-center items-center">
+            <div class="w-full px-30 flex justify-center items-center">
                 <div class="w-full text-center text-alter">{message}</div>
             </div>
             <div class="w-full pt-5">
                 <TaskInformation task={task} issue={issue} fetchTaskDetail={fetchTaskDetail}/>
+            </div>
+            <div class="w-full px-30 pt-5 flex flex-row">
+                <div class="w-1/5">
+                    <p class="text-alter text-base">{sessionMessage}</p>
+                    <p class="text-black text-base">Sessions: </p>
+                </div>
+                <div class="w-4/5 flex flex-col space-y-2">
+                    {sessions.length > 0? (
+                        sessions.map((session)=>{
+                            return <SessionCard session={session} fetchTaskDetail={fetchTaskDetail} setSessionMessage={setSessionMessage}/>
+                        })
+                    ):(
+                        <p class="text-shadow text-base">No session yet</p>
+                    )}
+                </div>
             </div>
 
             <div class="w-full pt-5 px-30 flex flex-col space-y-3 justify-center items-center text-center">
