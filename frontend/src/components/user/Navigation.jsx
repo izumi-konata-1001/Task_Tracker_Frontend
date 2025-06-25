@@ -13,6 +13,9 @@ function Navigation(){
     return(
         <div className="h-full flex justify-center items-center text-white  text-xl font-semibold">
             <div className="h-full flex-1 flex items-center justify-center transition duration-300 hover:text-dark rounded">
+                <Link to="/" className="w-full text-center">Home</Link>
+            </div>
+            <div className="h-full flex-1 flex items-center justify-center transition duration-300 hover:text-dark rounded">
                 <Link to="/account" className="w-full text-center">Account</Link>
             </div>
             <div className="h-full flex-1 flex items-center justify-center transition duration-300 hover:text-dark rounded">
