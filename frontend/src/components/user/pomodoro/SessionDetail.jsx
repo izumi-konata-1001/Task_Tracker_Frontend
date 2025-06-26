@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import BASE_URL from "../../../utils/api";
 
 import TaskInformation from "./session_detail_components/TaskInfomation";
@@ -14,7 +14,8 @@ import RedirectAfter from "../../RedirectAfter";
 function sessionDetail(){
     const { id } = useParams();
     const {token} = useAuth();
-    
+
+    const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from;
 
@@ -68,7 +69,9 @@ function sessionDetail(){
         fetchData();
     }, [token]);
 
-
+    const handleTask = (taskId)=>{
+        navigate(`/task/detail/${taskId}`, {state: { from: location.pathname }})
+    }
     const handleDelete =async (e)=>{
         e.preventDefault();
         try{
@@ -131,6 +134,12 @@ function sessionDetail(){
                     </div>
                     <div class="w-full">
                         <TaskInformation task={task}/>
+                        <div class="w-full pt-5 flex px-30 justify-center items-center">
+                            <button onClick={()=>{handleTask(task.id)}}
+                            class="w-full px-2 py-1 bg-primary border-primary border-2 text-white rounded-xl hover:bg-white hover:text-primary">
+                                View Task Detail
+                            </button>
+                        </div>
                     </div>
                     <div class="w-full">
                         <SessionInformation session={session} />

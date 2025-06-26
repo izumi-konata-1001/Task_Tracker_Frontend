@@ -1,8 +1,12 @@
 import BASE_URL from "../../../../utils/api";
 import { useState } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 function TaskInformation(props){
     const {token} = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const taskId = props.task.id;
     const title = props.task.title;
@@ -13,6 +17,10 @@ function TaskInformation(props){
     const issue = props.issue;
 
     const [message,setMessage] = useState("");
+
+    const handleIssue = (issueId)=>{
+        navigate(`/issue/detail/${issueId}`,{state: { from: location.pathname }})
+    }
 
     const handleRemove = async (e)=>{
         e.preventDefault();
@@ -73,11 +81,10 @@ function TaskInformation(props){
 
                     <div class="w-3/5">
                         {issue ? (
-                        <div class="bg-white border-2 border-dark rounded-lg p-2 shadow-sm w-full flex justify-between items-center h-15">
-                            <div class="flex flex-col">
+                        <div onClick={()=>handleIssue(issue.id)}
+                        class="cursor-pointer bg-white border-2 border-dark rounded-lg p-3 shadow-sm w-full flex flex-col items-start hover:border-primary transition-colors duration-300">
                             <h2 class="text-sm font-semibold text-dark">{issue.title}</h2>
                             <p class="text-sm text-shadow">Created: {issue.created_at}</p>
-                            </div>
                         </div>
                         ) : (
                         <div class="text-sm text-shadow">no issue yet</div>

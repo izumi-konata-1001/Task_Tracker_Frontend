@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import BASE_URL from "../../../../utils/api";
 
@@ -7,6 +7,13 @@ function SessionCard(props){
     const fetchTaskDetail = props.fetchTaskDetail;
     const setSessionMessage = props.setSessionMessage
     const {token} = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleSession = (sessionId)=>{
+        navigate(`/pomodoro/detail/${sessionId}`,{state: { from: location.pathname }})
+    }
     
     const handleDelete =async ()=>{
         try{
@@ -39,7 +46,9 @@ function SessionCard(props){
     }
     return(
         <div class="w-full flex flex-row">
-            <div class="w-3/4 flex flex-row justify-center items-center px-4 py-2 bg-white border-2 border-dark rounded-xl">
+            <div onClick={()=>handleSession(session.id)}
+            class="cursor-pointer w-3/4 flex flex-row justify-center items-center px-4 py-2 bg-white border-2 border-dark rounded-xl hover:border-primary transition-colors duration-300"
+            >
                 <div class="w-3/5 felx flex-col justify-start">
                     <div class="w-full">
                         <label class="text-black text-base">Note: </label>
