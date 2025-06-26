@@ -1,22 +1,22 @@
 import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import BASE_URL from "../../../utils/api";
 
 import { useAuth } from "../../../context/AuthContext";
 
 function AccountInformation(){
     const {token} = useAuth();
-    console.log("token:",token);
     const [userId, setUserId] = useState("");
 
     const navigate = useNavigate();
-
+    const location = useLocation();
+    
     const [message, setMessage] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
 
     const handleChangePassword = ()=>{
-        navigate('/account/change_password');
+        navigate('/account/change_password',{state: { from: location.pathname }});
     }
 
     const fetchUserInfo = async ()=>{

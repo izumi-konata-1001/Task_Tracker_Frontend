@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 function GuestHome(){
+    const navigate = useNavigate();
+
+    const handleStart = (e)=>{
+        e.preventDefault();
+        navigate('/register');
+    }
     return(
         <div class="w-full h-full flex flex-col items-center justify-center px-40">
             <div class="w-full mb-5">
@@ -15,6 +23,13 @@ function GuestHome(){
                 <p class="text-xl font-bold text-primary">
                     Start your journey toward better focus and smarter work — today.
                 </p>
+                <div class="w-full flex justify-start items-center">
+                    <button type="button" onClick={handleStart}
+                    class="cursor-pointer px-8 py-1 border-3 border-primary bg-primary text-white text-xl font-semibold rounded-xl hover:bg-white hover:text-primary">
+                        Start →
+                        </button>
+
+                </div>
             </div>
             
         </div>

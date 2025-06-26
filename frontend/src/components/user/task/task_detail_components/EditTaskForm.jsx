@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import BASE_URL from "../../../../utils/api";
 import { useAuth } from "../../../../context/AuthContext";
 function EditTaskForm(props){
     const {token} = useAuth();
 
     const navigate = useNavigate();
+
     const task = props.task;
     const [title, setTitle] = useState(task.title);
     const [description, setDescription] = useState(task.description);
     const [completeStatus, setCompleteStatus] = useState(task.completed === 1);
 
     const onCancel = props.onCancel;
+    const fetchTaskDetail = props.fetchTaskDetail;
 
     const [message, setMessage] = useState("");
     
@@ -58,8 +60,8 @@ function EditTaskForm(props){
 
             if(response.ok){
                 console.log('Edit task successfully.');
+                fetchTaskDetail();
                 onCancel();
-                navigate(`/task/detail/${task.id}`, { replace: true });
                 return;
             }else{
                 setMessage('Edit task failed.');

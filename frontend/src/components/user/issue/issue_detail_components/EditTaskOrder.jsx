@@ -83,7 +83,6 @@ function EditTaskOrder(props) {
             if (response.ok) {
                 setMessage("Change order successfully.");
                 fetchIssueDetail();
-                navigate(`/issue/detail/${issueId}`);
                 onCancelEditOrder();
                 return;
             }else{

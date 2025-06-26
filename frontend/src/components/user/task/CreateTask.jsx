@@ -1,10 +1,15 @@
+import { useLocation } from "react-router-dom";
+
 import CreateTaskForm from "./create_task_components/CreateTaskForm";
 import BackButton from "../../BackButton";
 function CreateTask(){
+    const location = useLocation();
+    const from = location.state?.from;
+
     return(
         <div class="w-full h-screen flex flex-col items-center justify-center">
             <div class="w-full px-40">
-                <BackButton path="/task"/>
+                <BackButton path={from}/>
             </div>
             <div class="w-full flex justify-center items-center pt-5">
                 <h1 class="text-2xl font-bold">Create New Task</h1>

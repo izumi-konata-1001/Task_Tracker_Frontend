@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import BASE_URL from "../../../utils/api";
 import { useAuth } from "../../../context/AuthContext";
@@ -7,6 +8,8 @@ import BackButton from "../../BackButton";
 import RedirectAfter from "../../RedirectAfter";
 
 function ChangePasword(){
+    const location = useLocation();
+    const from = location.state?.from;
     const {token, updateToken} = useAuth();
 
     const [showRedirect, setShowRedirect] = useState(false);
@@ -87,7 +90,7 @@ function ChangePasword(){
     return(
         <div>
             <div class="mb-4">
-                <BackButton path={"/account"} />
+                <BackButton path={from} />
             </div>
             
             <div class="text-center mb-3">

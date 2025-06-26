@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function CreateTaskButton(){
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleClick = ()=>{
-        navigate('/task/create');
+        navigate('/task/create',{state:{ from: location.pathname }});
     }
     return(
         <div class="w-full flex justify-center item-center px-20">

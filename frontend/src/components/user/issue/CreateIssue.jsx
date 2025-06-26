@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import BASE_URL from '../../../utils/api';
 import { useAuth } from "../../../context/AuthContext";
 
@@ -13,6 +13,9 @@ function CreateIssue(){
     const {token} = useAuth();
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from; 
+
     const [message, setMessage] = useState("");
     const [title, setTitle] = useState("");
     const [description,setDescription] = useState("");
@@ -143,7 +146,7 @@ function CreateIssue(){
     return(
         <div class="w-full h-screen flex flex-col items-center justify-center">
             <div class="w-full px-40">
-                <BackButton path={"/issue"} />
+                <BackButton path={from} />
             </div>
             <div class="w-full flex justify-center items-center pt-5">
                 <h1 class="text-2xl font-bold">Create New Issue</h1>

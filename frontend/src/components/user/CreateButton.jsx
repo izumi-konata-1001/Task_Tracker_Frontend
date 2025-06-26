@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function CreateButton(props){
+    const location = useLocation();
     const currentSection = props.section;
     const navigate = useNavigate();
 
     const handleClick = ()=>{
-        navigate(`/${currentSection}/create`);
+        navigate(`/${currentSection}/create`,{state:{ from: location.pathname }});
     }
     return(
         <div class="w-full flex justify-center item-center px-20">

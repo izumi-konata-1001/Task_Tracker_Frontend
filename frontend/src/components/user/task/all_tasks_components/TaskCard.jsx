@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 function TaskCard(props){
+    const location = useLocation();
     const navigate = useNavigate();
     const task = props.task;
 
     const handleViewMore = () => {
-        navigate(`/task/detail/${task.id}`);
+        navigate(`/task/detail/${task.id}`,{state: { from: location.pathname }});
     };
     return(
         <div onClick={handleViewMore}

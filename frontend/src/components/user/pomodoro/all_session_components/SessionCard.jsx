@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 function SessionCard(props){
     const session = props.session;
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleDetail = (e)=>{
         e.preventDefault();
-        navigate(`/pomodoro/detail/${session.id}`);
+        navigate(`/pomodoro/detail/${session.id}`,{state: { from: location.pathname }});
     }
 
     return(

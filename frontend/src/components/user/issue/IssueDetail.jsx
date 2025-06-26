@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import BASE_URL from "../../../utils/api";
 import { useAuth } from "../../../context/AuthContext";
 
@@ -16,9 +17,13 @@ function IssueDetail(){
     const {token} = useAuth();
     const { id } = useParams();
 
+    const location = useLocation();
+    const from = location.state?.from;
+
     const [message, setMessage] = useState("");
     const [taskMessage, setTaskMessage] = useState("");
     const [addTaskMessage, setAddTaskMessage] = useState("");
+    const [validFetch, setValidFetch] = useState(true);
 
     const [tasksBelongToIssue, setTasksBelongToIssue] = useState([]);
     const [availableTasks, setAvailableTasks] = useState([]);
@@ -52,7 +57,14 @@ function IssueDetail(){
                 setTasksBelongToIssue(result.tasks);
                 console.log('Fetch issue detail successfully.');
                 return;
-            }else{
+            }else if(response.status == 403)
+            {
+                setValidFetch(false);
+                setMessage('No authorization.')
+                console.error('Fetch issue detail failed, error:', result.error);
+                return;
+            }
+            else{
                 setMessage('Fetch issue detail failed.');
                 console.error('Fetch issue detail failed, error:', result.error);
                 return;
@@ -65,7 +77,6 @@ function IssueDetail(){
     }
 
     const fetchAvaliableTasks = async ()=>{
-        setMessage("")
         setAddTaskMessage("");
         setTaskMessage("");
         try{
@@ -236,47 +247,60 @@ function IssueDetail(){
 
     return(
         <div class="w-full h-screen flex flex-col items-center justify-center">
+            <div class="w-full flex justify-start pl-30">
+                <BackButton path={from}/>
+            </div>
             <div class="text-alter">
                 {message}
             </div>
-            <div class="w-full flex justify-start pl-30">
-                <BackButton path={"/issue"}/>
-            </div>
-            
+            {validFetch ? (
             <div class="w-full">
                 <IssueInformation issue={issue}/>
             </div>
+            ):(
+                <p class="text-shadow">No auth to view  issue detail.</p>
+            )}
 
+            {validFetch ? (
             <div class="w-full pt-4">
                 <p class="w-full px-30 text-left text-alter">{taskMessage}</p>
                 <TaskList tasksBelongToIssue={tasksBelongToIssue} handleRemove={handleRemove}/>
             </div>
+            ):(
+                <p class="text-shadow">No auth to view  task list detail.</p>
+            )}
 
-            <div class="w-full pt-4">
-                <p class="w-full px-30 text-left text-alter">{addTaskMessage}</p>
-                <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd}/>
-            </div>
+            {validFetch ? (
+                <>
+                    <div class="w-full pt-4">
+                        <p class="w-full px-30 text-left text-alter">{addTaskMessage}</p>
+                        <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd}/>
+                    </div>
 
-            <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
-                <button onClick={onShowEditOrder}
-                class="w-full bg-dark text-white border-2 border-dark  px-2 py-1 rounded-md hover:bg-light hover:text-dark transition-colors duration-300">
-                    Change Order
-                </button>
-            </div>
+                    <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
+                        <button onClick={onShowEditOrder}
+                        class="w-full bg-dark text-white border-2 border-dark  px-2 py-1 rounded-md hover:bg-light hover:text-dark transition-colors duration-300">
+                            Change Order
+                        </button>
+                    </div>
 
-            <div class="w-full pt-15 px-30 flex justify-center items-center text-center">
-                <button onClick={onShowEditIssue}
-                class="w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
-                    Edit Issue
-                </button>
-            </div>
+                    <div class="w-full pt-15 px-30 flex justify-center items-center text-center">
+                        <button onClick={onShowEditIssue}
+                        class="w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
+                            Edit Issue
+                        </button>
+                    </div>
 
-            <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
-                <button onClick={handleDelete}
-                class="w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-md hover:bg-light hover:text-black transition-colors duration-300">
-                    Delete Issue
-                </button>
-            </div>
+                    <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
+                        <button onClick={handleDelete}
+                        class="w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-md hover:bg-light hover:text-black transition-colors duration-300">
+                            Delete Issue
+                        </button>
+                    </div>
+                </>
+            ):(
+                <p class="text-shadow">No auth to edit issue.</p>
+            )}
 
             {showEditIssue && 
                 <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">

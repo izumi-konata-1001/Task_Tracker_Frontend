@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BASE_URL from "../../../utils/api";
+import { useNavigate,useLocation } from "react-router-dom";
 
 import { useAuth } from "../../../context/AuthContext";
 
@@ -14,9 +15,15 @@ function TaskDetail(){
     const {token} = useAuth();
     const { id } = useParams();
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from;
+    console.log(from);
+
     const [showRedirect, setShowRedirect] = useState(false);
     const [message,setMessage] = useState("");
     const [sessionMessage, setSessionMessage] = useState("");
+    const [validFetch, setValidFetch] = useState(true);
 
     const [task,setTask] = useState("");
     const [issue,setIssue] = useState("")
@@ -47,8 +54,15 @@ function TaskDetail(){
                 setTask(result.task);
                 setSessions(result.sessions);
                 console.log('Fetch task detial and issue successfully');
+                setValidFetch(true);
                 return;
-            }else{
+            }else if(response.status == 403){
+                setMessage('No authorization.')
+                console.error('Fetch task detail failed, error:', result.error);
+                setValidFetch(false);
+                return;
+            }
+            else{
                 setMessage('Fetch task detail failed.');
                 console.error('Fetch task detail failed, error:', result.error);
                 return;
@@ -112,14 +126,18 @@ function TaskDetail(){
     return(
         <div class="w-full pb-10 pt-10 flex flex-col items-center justify-center">
             <div class="w-full px-30">
-                <BackButton path={"/task"} />
+                <BackButton path={from}/>
             </div>
             <div class="w-full px-30 flex justify-center items-center">
                 <div class="w-full text-center text-alter">{message}</div>
             </div>
-            <div class="w-full pt-5">
-                <TaskInformation task={task} issue={issue} fetchTaskDetail={fetchTaskDetail}/>
-            </div>
+            {validFetch ? (
+                <div class="w-full pt-5">
+                    <TaskInformation task={task} issue={issue} fetchTaskDetail={fetchTaskDetail}/>
+                </div>
+            ):(<p class="text-shadow">No auth to view task detail</p>)}
+
+            {validFetch ? (
             <div class="w-full px-30 pt-5 flex flex-row">
                 <div class="w-1/5">
                     <p class="text-alter text-base">{sessionMessage}</p>
@@ -135,7 +153,9 @@ function TaskDetail(){
                     )}
                 </div>
             </div>
+            ):(<p class="text-shadow">No auth to view session list</p>)}
 
+            {validFetch ? (
             <div class="w-full pt-5 px-30 flex flex-col space-y-3 justify-center items-center text-center">
                 <button onClick={onShow} type="button"
                 class="cursor: pointer w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
@@ -146,11 +166,12 @@ function TaskDetail(){
                     Delete Task
                 </button>
             </div>
+            ):(null)}
 
-            {showEditTask &&
+            {showEditTask && validFetch ?(
                 <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
-                    <EditTaskForm task={task} onCancel={onCancel}/>
-                </div>
+                    <EditTaskForm task={task} onCancel={onCancel} fetchTaskDetail={fetchTaskDetail}/>
+                </div>):(null)
             }
             <RedirectAfter visible={showRedirect} delay={3000} path="/task" message="Redirecting..." />
         </div>

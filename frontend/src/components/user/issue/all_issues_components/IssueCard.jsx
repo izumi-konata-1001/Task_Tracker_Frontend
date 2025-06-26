@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 function IssueCard(props){
     const navigate = useNavigate();
+    const location = useLocation();
     const issue = props.issue;
 
     const handleViewMore = () => {
-        navigate(`/issue/detail/${issue.id}`);
+        navigate(`/issue/detail/${issue.id}`,{state: { from: location.pathname }});
     };
     const truncatedDescription = issue.description.length > 20
         ? issue.description.slice(0, 20) + '...'
