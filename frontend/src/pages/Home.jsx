@@ -2,7 +2,7 @@ import { useAuth } from "../context/AuthContext";
 
 import Header from "../components/Header";
 import GuestHome from "../components/guest/GuestHome";
-import UserHome from "../components/user/UserHome";
+import UserHome from "../components/user/home/UserHome";
 
 function Home(){
     const {token} = useAuth();

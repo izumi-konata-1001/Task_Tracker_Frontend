@@ -97,6 +97,11 @@ function AllSession(){
                 console.log('Fetch current users task has session successfully.');
                 return;
             }
+            else if(response.status == 404){
+                setMessage('No task with session found.');
+                console.error('No task with session found, error:', result.error);
+                return;
+            }
             else{
                 setMessage('Fetch task has session failed');
                 console.error('Fetch task has session failed,error:', result.error);
