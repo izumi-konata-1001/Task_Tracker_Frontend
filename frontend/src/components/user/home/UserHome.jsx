@@ -6,6 +6,8 @@ import TaskAnalysis from "./analysis_data_components/TaskAnalysis";
 import IssueAnalysis from "./analysis_data_components/IssueAnalysis";
 import SessionAnalysis from "./analysis_data_components/SessionAnalysis";
 
+import AnalysisChart from "./chart_components/AnalysisChart";
+
 function UserHome(){
     const {token} = useAuth();
     
@@ -65,6 +67,12 @@ function UserHome(){
                     <SessionAnalysis session={session}/>
                 </div>
             </div>
+            <div class="w-full pt-3 pb-10">
+                <div class="w-full ">
+                    <AnalysisChart issue={issue} task={task} session={session}/>
+                </div>
+            </div>
+            
         </div>
     )
 }

@@ -29,24 +29,19 @@ function SessionAnalysis(props){
                                 <label>{session.durationCount.fifteen}</label>
                             ):(<label class="text-shadow">0</label>)}
                         </div>
+
+                    </div>
+                    <div class="w-1/2">
                         <div class="w-full flex flex-row justify-start space-x-3">
                             <label>25 mins:</label>
-                            {session.durationCount && session.durationCount.tewenFive > 0? (
+                            {session.durationCount && session.durationCount.twentyFive > 0? (
                                 <label>{session.durationCount.twentyFive}</label>
                             ):(<label class="text-shadow">0</label>)}
                         </div>
-                    </div>
-                    <div class="w-1/2">
                         <div class="w-full flex flex-row justify-start space-x-3">
                             <label>50 mins:</label>
                             {session.durationCount && session.durationCount.fifty > 0? (
                                 <label>{session.durationCount.fifty}</label>
-                            ):(<label class="text-shadow">0</label>)}
-                        </div>
-                            <div class="w-full flex flex-row justify-start space-x-3">
-                            <label>Other duration:</label>
-                            {session.durationCount && session.durationCount.other > 0 ? (
-                                <label>{session.durationCount.other}</label>
                             ):(<label class="text-shadow">0</label>)}
                         </div>
                     </div>
