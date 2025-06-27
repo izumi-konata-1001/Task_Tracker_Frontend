@@ -60,12 +60,10 @@ function UserHome(){
                 <p class="text-base text-alter">{message}</p>
             </div>
 
-            <div class="w-full pt-5 flex flex-col justify-center items-center space-y-3">
+            <div class="w-full pt-5 flex flex-row justify-center items-stretch space-x-3">
                 <TaskAnalysis task={task}/>
-                <div class="w-full flex flex-row space-x-3 ">
-                    <IssueAnalysis issue={issue}/>
-                    <SessionAnalysis session={session}/>
-                </div>
+                <IssueAnalysis issue={issue}/>
+                <SessionAnalysis session={session}/>
             </div>
             <div class="w-full pt-3 pb-10">
                 <div class="w-full ">
