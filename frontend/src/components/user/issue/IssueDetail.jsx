@@ -123,42 +123,49 @@ function IssueDetail(){
         setSelectedTaskId(id)
     }
 
-    const handleAdd = async ()=>{
-        setMessage("");
-        setAddTaskMessage("");
-        setTaskMessage("");
-        try{
-            const response = await fetch(`${BASE_URL}/task/add`,{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'Authorization':`Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    taskId: selectedTaskId,
-                    issueId: id,
-                }),
-            });
-            const result = await response.json();
+const handleAdd = async () => {
+    setMessage("");
+    setAddTaskMessage("");
+    setTaskMessage("");
 
-            if(response.ok){
-                setSelectedTaskId("");
-                setAvailableTasks([]);
-                console.log('Add task into issue successfully.');
-                await fetchIssueDetail();
-                await fetchAvaliableTasks();
-                return;
-            }else{
-                setAddTaskMessage('Add task into issue failed in database.');
-                console.error('Add task into issue failed, error:', result.error);
-                return;
-            }
-        }catch(error){
-            setAddTaskMessage('Add task into issue failed, network or unexpected error.')
-            console.error('Add task into issue failed, error:', error);
+    if (tasksBelongToIssue.length >= 5) {
+        setAddTaskMessage("You can only add up to 5 tasks for this issue.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/task/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                taskId: selectedTaskId,
+                issueId: id,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            setSelectedTaskId("");
+            setAvailableTasks([]);
+            console.log('Add task into issue successfully.');
+            await fetchIssueDetail();
+            await fetchAvaliableTasks();
+            return;
+        } else {
+            setAddTaskMessage('Add task into issue failed in database.');
+            console.error('Add task into issue failed, error:', result.error);
             return;
         }
+    } catch (error) {
+        setAddTaskMessage('Add task into issue failed, network or unexpected error.');
+        console.error('Add task into issue failed, error:', error);
+        return;
     }
+};
 
     const handleRemove = async (e)=>{
         e.preventDefault();
@@ -274,7 +281,7 @@ function IssueDetail(){
                 <>
                     <div class="w-full pt-4">
                         <p class="w-full px-30 text-left text-alter">{addTaskMessage}</p>
-                        <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd}/>
+                        <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd} tasksBelongToIssue={tasksBelongToIssue}/>
                     </div>
 
                     <div class="w-full pt-5 px-30 flex justify-center items-center text-center">

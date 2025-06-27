@@ -3,6 +3,7 @@ function AddTaskSelector(props){
     const selectedTaskId = props.selectedTaskId;
     const handleSelect = props.handleSelect;
     const handleAdd = props.handleAdd;
+    const tasksBelongToIssue = props.tasksBelongToIssue;
     return(
         <div class="w-full px-30 flex flex-col">
             <div class="w-full pb-2">
@@ -24,9 +25,16 @@ function AddTaskSelector(props){
                     </select>
                 </div>
                 <div class="w-1/6 pl-2">
-                    <button onClick={handleAdd}
-                    class="w-full h-full py-2 px-3 text-sm rounded-md bg-primary text-white border-2 border-primary hover:bg-white hover:text-primary font-medium transition-colors duration-300">
-                        add
+                    <button
+                    onClick={handleAdd}
+                    disabled={availableTasks.length === 0 || tasksBelongToIssue.length >= 5}
+                    class={`w-full h-full py-2 px-3 text-sm rounded-md border-2 font-medium transition-colors duration-300 ${
+                        availableTasks.length === 0 || tasksBelongToIssue.length >= 5
+                        ? "bg-gray-300 text-white border-gray-300 cursor-not-allowed"
+                        : "bg-primary text-white border-primary hover:bg-white hover:text-primary"
+                    }`}
+                    >
+                    add
                     </button>
                 </div>
             </div>

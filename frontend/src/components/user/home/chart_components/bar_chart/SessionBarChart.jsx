@@ -1,32 +1,22 @@
 import { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { useAuth } from "../../../../../context/AuthContext";
 import BASE_URL from "../../../../../utils/api";
 
 function SessionBarChart() {
-  const { token } = useAuth();
-  const [days, setDays] = useState(7);
-  const [data, setData] = useState([]);
-  const [message, setMessage] = useState("");
+    const { token } = useAuth();
+    const [days, setDays] = useState(7);
+    const [data, setData] = useState([]);
+    const [message, setMessage] = useState("");
 
   const fetchSession = async () => {
     if (![7, 30, 180].includes(Number(days))) {
-      setMessage("Invalid date range.");
-      return;
+        setMessage("Invalid date range.");
+        return;
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/pomodoro/analysis`, {
+        const response = await fetch(`${BASE_URL}/pomodoro/analysis`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,19 +25,19 @@ function SessionBarChart() {
         body: JSON.stringify({ days }),
       });
 
-      const result = await response.json();
-      if (response.ok) {
-        setData(result.data);
-        console.log("Fetch session barchart successfully.");
-      } else {
+        const result = await response.json();
+        if (response.ok) {
+            setData(result.data);
+            console.log("Fetch session barchart successfully.");
+        }else {
+            setData([]);
+            setMessage("Fetch session barchart data failed.");
+            console.error("Fetch session barchart data failed.", result.error);
+        }
+    }catch(error) {
         setData([]);
-        setMessage("Fetch session barchart data failed.");
-        console.error("Fetch session barchart data failed.", result.error);
-      }
-    } catch (error) {
-      setData([]);
-      setMessage("Fetch session barchart data failed, network or unexpected error.");
-      console.error("Fetch session barchart data failed, error:", error);
+        setMessage("Fetch session barchart data failed, network or unexpected error.");
+        console.error("Fetch session barchart data failed, error:", error);
     }
   };
 
@@ -85,11 +75,12 @@ function SessionBarChart() {
             textAnchor="end"
             height={60}
             tickFormatter={(dateStr) => {
-              if (isMonthly) return dateStr; // yyyy-mm
-              const d = new Date(dateStr);
-              const month = String(d.getMonth() + 1).padStart(2, "0");
-              const day = String(d.getDate()).padStart(2, "0");
-              return `${month}-${day}`;
+                if (isMonthly) 
+                    return dateStr;
+                const d = new Date(dateStr);
+                const month = String(d.getMonth() + 1).padStart(2, "0");
+                const day = String(d.getDate()).padStart(2, "0");
+                return `${month}-${day}`;
             }}
           />
           <YAxis />

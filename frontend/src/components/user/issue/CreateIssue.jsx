@@ -11,6 +11,7 @@ import BackButton from "../../BackButton";
 
 function CreateIssue(){
     const {token} = useAuth();
+    const MAX_TASKS = 5;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -35,19 +36,24 @@ function CreateIssue(){
         }
     }
 
-    const handleAdd = () => {
-        if (
-            selectedTask &&
-            selectedTask.id &&
-            !alreadySelectedTasks.some(task => task.id === selectedTask.id)
-        ) {
-            setAlreadySelectedTasks(prev => [...prev, selectedTask]);
-            
-            setAvailableTasks(prev => prev.filter(task => task.id !== selectedTask.id));
-            setSelectedTaskId("");
-            setSelectedTask({});
-        }
-    };
+const handleAdd = () => {
+    if (alreadySelectedTasks.length >= MAX_TASKS) {
+        setMessage("You can add up to 5 tasks only.");
+        return;
+    }
+
+    if (
+        selectedTask &&
+        selectedTask.id &&
+        !alreadySelectedTasks.some(task => task.id === selectedTask.id)
+    ) {
+        setAlreadySelectedTasks(prev => [...prev, selectedTask]);
+        setAvailableTasks(prev => prev.filter(task => task.id !== selectedTask.id));
+        setSelectedTaskId("");
+        setSelectedTask({});
+        setMessage(""); // 清除提示
+    }
+};
 
     const handleDelete =(taskIdToRemove)=>{
         const taskToRestore = alreadySelectedTasks.find(task => task.id === taskIdToRemove);
@@ -159,7 +165,7 @@ function CreateIssue(){
                     <SelectedTaskList alreadySelectedTasks={alreadySelectedTasks} handleDelete={handleDelete}/>
                 </div>
                 <div class="w-full pb-3">
-                    <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd}/>
+                    <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd} alreadySelectedTasks={alreadySelectedTasks}/>
                 </div>
 
                 <div class="w-full">

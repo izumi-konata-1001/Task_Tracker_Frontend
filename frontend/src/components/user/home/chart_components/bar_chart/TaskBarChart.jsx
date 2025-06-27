@@ -30,7 +30,6 @@ function TaskCombinedBarLineChart() {
             const result = await response.json();
             if(response.ok){
                 setData(result.taskChartData);
-                console.log('result:', result.taskChartData);
                 console.log('Fetch task bar chart data successfully.');
                 return;
             }else{
@@ -77,21 +76,22 @@ function TaskCombinedBarLineChart() {
       <ResponsiveContainer width="100%" height={360}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="date"
-            angle={-45}
-            textAnchor="end"
-            height={60}
-            tickFormatter={(dateStr) => {
-              if (days === 180) {
-                return dateStr; // e.g. 2025-03
-              }
-              const d = new Date(dateStr);
-              const month = String(d.getMonth() + 1).padStart(2, "0");
-              const day = String(d.getDate()).padStart(2, "0");
-              return `${month}-${day}`;
-            }}
-          />
+        <XAxis
+        dataKey="date"
+        angle={-45}
+        textAnchor="end"
+        height={60}
+        tickFormatter={(dateStr) => {
+            if (days === 180) return dateStr;
+
+            const parts = dateStr.split("-");
+            if (parts.length === 3) {
+                const [, month, day] = parts;
+                return `${month}-${day}`;
+            }
+            return dateStr;
+        }}
+        />
           <YAxis />
           <Tooltip />
           <Legend />

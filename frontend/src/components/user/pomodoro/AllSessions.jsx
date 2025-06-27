@@ -19,6 +19,12 @@ function AllSession(){
     const [order,setOrder] = useState("DESC");
     const [orderKey,setOrderKey] = useState("create_time");
     
+    const [page, setPage] = useState(1);
+    const [pageInput, setPageInput] = useState(1);
+    const pageSize = 5;
+    const [total, setTotal] = useState(0);
+    const totalPages = Math.ceil(total / pageSize);
+
     const fetchAllSessions = async ()=>{
         try{
             const response = await fetch(`${BASE_URL}/pomodoro/all_by_user_id`, {
@@ -28,13 +34,16 @@ function AllSession(){
                     'Authorization': `Bearer ${token}`,
                 },
                 body:JSON.stringify({
-                    key:orderKey,
-                    order:order,
+                key: orderKey,
+                order: order,
+                page: page,
+                pageSize: pageSize,
                 }),
             })
             const result = await response.json();
             if(response.ok){
                 setSessions(result.sessions);
+                setTotal(result.total);
                 console.log(`Fetch all sessions with ${order} in ${order} successfully.`);
                 return;
             }
@@ -125,7 +134,7 @@ function AllSession(){
 
     useEffect(()=>{
         fetchData();
-    },[token,order,orderKey,selectedTaskId]);
+    },[token,order,orderKey,selectedTaskId,page]);
     
 
     const handleOrder = ()=>{
@@ -162,6 +171,56 @@ function AllSession(){
             </div>
             <div class="w-full pt-5">
                 <SessionList sessions={sessions}/>
+            </div>
+            <div className=" w-full flex justify-center items-center space-x-2 py-4">
+                <button
+                    onClick={() => {
+                    setPage((prev) => {
+                        const newPage = Math.max(1, prev - 1);
+                        setPageInput(newPage);
+                        return newPage;
+                    });
+                    }}
+                    disabled={page === 1}
+                    className="px-3 py-1 text-white border-2 border-primary bg-primary rounded-xl 
+                    hover:text-primary hover:bg-white disabled:opacity-50"
+                >
+                    Prev
+                </button>
+
+                <input
+                    type="number"
+                    value={pageInput}
+                    onChange={(e) => setPageInput(e.target.value)}
+                    onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        const num = Number(pageInput);
+                        if (num >= 1 && num <= totalPages) {
+                        setPage(num);
+                        } else {
+                        alert(`Please enter a number between 1 and ${totalPages}`);
+                        }
+                    }
+                    }}
+                    className="w-16 px-2 py-1 border-2 border-shadow bg-white rounded text-center"
+                />
+
+                <span className="text-sm">/ {totalPages}</span>
+
+                <button
+                    onClick={() => {
+                    setPage((prev) => {
+                        const newPage = prev * pageSize < total ? prev + 1 : prev;
+                        setPageInput(newPage);
+                        return newPage;
+                    });
+                    }}
+                    disabled={page * pageSize >= total}
+                    className="px-3 py-1 text-white border-2 border-primary bg-primary rounded-xl 
+                    hover:text-primary hover:bg-white disabled:opacity-50"
+                >
+                    Next
+                </button>
             </div>
             
         </div>
