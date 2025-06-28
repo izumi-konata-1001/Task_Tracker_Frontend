@@ -8,7 +8,7 @@ import Login from '../pages/guest/Login';
 import Register from '../pages/guest/Register';
 
 import Account from '../pages/logged_in/Account';
-import AccountInformation from '../components/user/Account/AccountInformation';
+import AccountInformation from '../components/user/account/AccountInformation';
 import ChangePasword from '../components/user/account/ChangePassword';
 
 import Task from '../pages/logged_in/Task';
