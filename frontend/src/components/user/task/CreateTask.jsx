@@ -7,14 +7,16 @@ function CreateTask(){
     const from = location.state?.from;
 
     return(
-        <div class="w-full h-screen flex flex-col items-center justify-center">
-            <div class="w-full px-40">
+        <div className="w-full pt-10 pb-5 md:px-20 px-10">
+            <div className="w-full flex justify-start">
                 <BackButton path={from}/>
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
-                <h1 class="text-2xl font-bold">Create New Task</h1>
+
+            <div className="w-full flex justify-center items-center pt-5">
+                <h1 className="text-xl font-bold
+                md:text-2xl md:font-semibold">Create New Task</h1>
             </div>
-            <div class="w-full pt-5">
+            <div className="w-full pt-5">
                 <CreateTaskForm />
             </div>
         </div>

@@ -8,12 +8,12 @@ function Home(){
     const {token} = useAuth();
     
     return(
-        <div>
+        <div className="w-full h-screen flex flex-col">
             <Header />
-            <div class="flex justify-center w-full min-h-screen">
-                <div class=" bg-light w-4/5">
+            <div className="w-full flex-1 pt-10 flex justify-center items-center">
+                <div className="md:bg-light md:w-8/10 bg-light w-full h-full">
                     {
-                        token?<UserHome /> : <GuestHome />
+                        token? <UserHome /> : <GuestHome />
                     }
                 </div>
             </div>

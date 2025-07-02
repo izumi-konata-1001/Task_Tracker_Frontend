@@ -173,7 +173,6 @@ const handleAdd = async () => {
         setAddTaskMessage("");
         setTaskMessage("");
         const removeTaskId = e.target.value;
-        console.log("remove task id:", removeTaskId);
         try{
             const response = await fetch(`${BASE_URL}/task/remove`, {
                 method:'POST',
@@ -253,70 +252,66 @@ const handleAdd = async () => {
     }
 
     return(
-        <div class="w-full h-screen flex flex-col items-center justify-center">
-            <div class="w-full flex justify-start pl-30">
+        <div className="w-full pt-10 pb-5 md:px-20 px-10 space-y-5">
+            <div className="w-full flex justify-start">
                 <BackButton path={from}/>
             </div>
-            <div class="text-alter">
-                {message}
+
+            <div className="w-full flex justify-center items-center">
+                <div className="w-full text-center text-base text-alter">{message}</div>
             </div>
-            {validFetch ? (
-            <div class="w-full">
-                <IssueInformation issue={issue}/>
-            </div>
-            ):(
-                <p class="text-shadow">No auth to view  issue detail.</p>
-            )}
 
             {validFetch ? (
-            <div class="w-full pt-4">
-                <p class="w-full px-30 text-left text-alter">{taskMessage}</p>
+                <div className="w-full">
+                    <IssueInformation issue={issue}/>
+                </div>
+            ):(<p className="text-shadow text-base">No auth to view issue detail.</p>)}
+
+            {validFetch ? (
+            <div className="w-full">
+                <p className="w-full text-left text-alter">{taskMessage}</p>
                 <TaskList tasksBelongToIssue={tasksBelongToIssue} handleRemove={handleRemove}/>
             </div>
-            ):(
-                <p class="text-shadow">No auth to view  task list detail.</p>
-            )}
+            ):(<p className="text-shadow text-base">No auth to view  task list detail.</p>)}
 
             {validFetch ? (
-                <>
-                    <div class="w-full pt-4">
-                        <p class="w-full px-30 text-left text-alter">{addTaskMessage}</p>
+                <div className="w-full flex flex-col space-y-2">
+                    <div className="w-full">
+                        <p className="w-full text-left text-alter">{addTaskMessage}</p>
                         <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd} tasksBelongToIssue={tasksBelongToIssue}/>
                     </div>
-
-                    <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
+                    <hr className="my-5 border-t-2 border-shadow" />
+                    <div className="w-full flex justify-center items-center text-center">
                         <button onClick={onShowEditOrder}
-                        class="w-full bg-dark text-white border-2 border-dark  px-2 py-1 rounded-md hover:bg-light hover:text-dark transition-colors duration-300">
+                        className="cursor-pointer w-full bg-dark text-white border-2 border-dark  px-2 py-1 rounded-md hover:bg-light hover:text-dark transition-colors duration-300">
                             Change Order
                         </button>
                     </div>
 
-                    <div class="w-full pt-15 px-30 flex justify-center items-center text-center">
+                    <div className="w-full flex justify-center items-center text-center">
                         <button onClick={onShowEditIssue}
-                        class="w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
+                        className="cursor-pointer w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
                             Edit Issue
                         </button>
                     </div>
 
-                    <div class="w-full pt-5 px-30 flex justify-center items-center text-center">
+                    <div className="w-full flex justify-center items-center text-center">
                         <button onClick={handleDelete}
-                        class="w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-md hover:bg-light hover:text-black transition-colors duration-300">
+                        className="cursor-pointer w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-md hover:bg-light hover:text-alter transition-colors duration-300">
                             Delete Issue
                         </button>
                     </div>
-                </>
-            ):(
-                <p class="text-shadow">No auth to edit issue.</p>
-            )}
+                </div>
+            ):(<p className="text-shadow text-base">No auth to edit issue.</p>)}
 
             {showEditIssue && 
-                <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+                <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
                     <EditIssueForm issue={issue} onCancelEditIssue={onCancelEditIssue} fetchIssueDetail={fetchIssueDetail}/>
                 </div>
             }
 
             {showEditOrder && 
-                <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+                <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
                     <EditTaskOrder fetchIssueDetail={fetchIssueDetail} tasksBelongToIssue={tasksBelongToIssue} issueId={issue.id} onCancelEditOrder={onCancelEditOrder}/>
                 </div>
             }

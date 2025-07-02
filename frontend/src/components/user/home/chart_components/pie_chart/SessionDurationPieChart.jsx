@@ -15,7 +15,7 @@ function SessionDurationPieChart({session}){
     };
 
     return(
-        <div className="w-full flex flex-col items-center justify-center">
+        <div className="min-h-[230px] w-full flex flex-col items-center justify-center bg-white rounded-xl p-3">
             <PieChart width={200} height={200}>
                 <Pie
                     data={data}

@@ -69,6 +69,16 @@ function sessionDetail(){
         fetchData();
     }, [token]);
 
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const hour = `${date.getHours()}`.padStart(2, '0');
+        const minute = `${date.getMinutes()}`.padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
+
     const handleTask = (taskId)=>{
         navigate(`/task/detail/${taskId}`, {state: { from: location.pathname }})
     }
@@ -111,64 +121,33 @@ function sessionDetail(){
         setShowEditSession(false);
     }
     return(
-        <div class="w-full h-full px-40 flex flex-col space-y-5 py-10 juestify-center items-center">
-            <div class="w-full flex justify-start">
+        <div className="w-full pt-5 pb-10 md:px-20 px-10">
+            <div className="w-full flex justify-start pb-5">
                 <BackButton path={from}/>
             </div>
-            
-            <div class="w-full flex flex-col justify-center items-center">
-                <p class="text-3xl text-black font-semibold">Session Detail</p>
-                <p class="text-base text-alter">{message}</p>
-            </div>
-            {validFetch ? (
-                <>
-                    <div class="w-full px-30 flex flex-col">
-                        <div class="w-full flex flex-row justify-between">
-                            <label class="text-base text-shadow">Task created at: </label>
-                            <label class="text-base text-shadow">{task.created_at}</label>
-                        </div>
-                        <div class="w-full flex flex-row justify-between">
-                            <label class="text-base text-shadow">Session created at:</label>
-                            <label class="text-base text-shadow">{session.created_at}</label>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <TaskInformation task={task}/>
-                        <div class="w-full pt-5 flex px-30 justify-center items-center">
-                            <button onClick={()=>{handleTask(task.id)}}
-                            class="w-full px-2 py-1 bg-primary border-primary border-2 text-white rounded-xl hover:bg-white hover:text-primary">
-                                View Task Detail
-                            </button>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <SessionInformation session={session} />
-                    </div>
-                </>
-            ):(<p class="text-shadow">No auth to view session detail</p>)}
 
+            <div className="w-full flex justify-center items-center">
+                <div className="w-full text-center text-base text-alter">{message}</div>
+            </div>
+            
             {validFetch ? (
-            <>
-                <div class="w-full px-30 flex justify-center items-center">
-                    <button type="button" onClick={onShowEditSession}
-                    class="w-full bg-primary rounded-xl px-2 py-1 text-white border-2 border-primary hover:bg-white hover:text-primary"
-                    >
-                        Edit Note
-                    </button>
+                <div className="w-full flex flex-col justify-center items-center">
+                    <div className="w-full text-center">
+                        <h2 className="text-2xl font-semibold text-primary break-words">Session Detail</h2>
+                        <p className="text-shadow text-sm md:text-base">Session created at: {formatDate(session.created_at)}</p>
+                    </div>
+                    <div className="w-full">
+                        <TaskInformation task={task} handleTask={handleTask}/>
+                    </div>
+                    <div className="w-full">
+                        <SessionInformation session={session} onShowEditSession={onShowEditSession} handleDelete={handleDelete}/>
+                    </div>
                 </div>
-                <div class="w-full px-30 flex justify-center items-center">
-                    <button type="button" onClick={handleDelete}
-                    class="w-full bg-alter rounded-xl px-2 py-1 text-white border-2 border-alter hover:bg-white hover:text-alter"
-                    >
-                        Delete
-                    </button>
-                </div>
-            </>
-            ):(<p class="text-shadow">No auth to edit session detail</p>)}
+            ):(<p className="text-shadow">No auth to view session detail</p>)}
 
 
             {showEditSession && 
-                <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+                <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
                     <EditSessionNote sessionId={session.id} note={session.note} onCancelEditSession={onCancelEditSession} fetchSession={fetchSession}/>
                 </div>
             }

@@ -1,3 +1,4 @@
+import { FaArrowRight } from "react-icons/fa";
 import { useNavigate,useLocation } from "react-router-dom";
 
 function IssueCard(props){
@@ -8,31 +9,44 @@ function IssueCard(props){
     const handleViewMore = () => {
         navigate(`/issue/detail/${issue.id}`,{state: { from: location.pathname }});
     };
-    const truncatedDescription = issue.description.length > 20
-        ? issue.description.slice(0, 20) + '...'
+    const truncatedDescription = issue.description.length > 15
+        ? issue.description.slice(0, 15) + '...'
         : issue.description;
 
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const hour = `${date.getHours()}`.padStart(2, '0');
+        const minute = `${date.getMinutes()}`.padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
     
     return(
         <div onClick={handleViewMore}
-            class="cursor-pointer bg-white border-2 border-dark rounded-lg p-5 shadow-sm w-full flex flex-row justify-between items-center">
-            <div class="w-3/6 flex flex-col">
-                <h2 class="text-xl font-semibold text-dark mb-1">
+            className="w-full cursor-pointer bg-white border-2 border-dark rounded-xl p-5 shadow-sm  
+            sm:flex sm:flex-row sm:justify-between sm:items-center sm:space-x-2
+            hover:border-3 hover:border-primary
+            flex flex-col space-y-2"
+        >
+            <div className="flex flex-col sm:w-3/5">
+                <h2 className="text-xl font-semibold text-dark mb-1 break-words line-clamp-1">
                     {issue.title}
                 </h2>
-                <p class="text-sm text-shadow">
-                    Created At: {issue.created_at}
+                <p className="text-sm font-normal text-shadow">
+                    Created At: {formatDate(issue.created_at)}
+                </p>
+                <p className="text-sm font-medium text-shadow">
+                    Description: {truncatedDescription}
                 </p>
             </div>
-            <div class="w-2/6 flex justify-end">
-                <p class="text-sm font-medium text-right">
-                    {truncatedDescription}
-                </p>
-            </div>
-            <div class="w-1/6 flex justify-end">
+            <div className="flex justify-end sm:w-2/5 w-ful">
                 <button type="button" onClick={handleViewMore}
-                    className="cursor-pointer text-sm px-4 py-2 border-2 border-primary text-primary rounded hover:bg-primary hover:text-white transition duration-200">
-                    view more</button>
+                    className="p-1 bg-transparent text-dark
+                     hover:text-primary sm:transition duration-200">
+                    <FaArrowRight className="sm:text-2xl text-xl" />
+                </button>
             </div>
         </div>
     )

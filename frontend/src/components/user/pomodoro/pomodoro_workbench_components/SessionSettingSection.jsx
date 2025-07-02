@@ -4,18 +4,19 @@ import BASE_URL from "../../../../utils/api";
 
 function SessionSettingSection(props){
     const {token} = useAuth();
-    const setDuration = props.setDuration;
-    const setSelectedTask = props.setSelectedTask;
     const setVisibleTaskCard = props.setVisibleTaskCard;
     const setStartAvaliable = props.setStartAvaliable;
-    const note = props.note;
-    const setNote = props.setNote;
+    const setSessionSnapshot = props.setSessionSnapshot;
+    const hasActiveCard = props.hasActiveCard;
+    const setHasActiveCard = props.setHasActiveCard;
 
     const [message,setMessage] = useState("");
     const [selectorMessage, setSelectorMessage] = useState("");
 
+    const [note, setNote] = useState("");
     const [issues,setIssues] = useState([]);
     const [tasks, setTasks] = useState([]);
+    const [task, setTask] = useState({});
     const [selectedDuration, setSelectedDuration] = useState(0);
     const [availableAdd, setAvailableAdd] = useState(false);
 
@@ -150,7 +151,7 @@ function SessionSettingSection(props){
         const task = tasks.find((task) => task.id === selectedId);
 
         if (task) {
-            setSelectedTask(task);
+            setTask(task);
             setAvailableAdd(true);
             return;
         }
@@ -168,8 +169,16 @@ function SessionSettingSection(props){
 
     const handleAdd = async ()=>{
         setVisibleTaskCard(true);
-        setDuration(selectedDuration);
         setStartAvaliable(true);
+        setSessionSnapshot({
+            task: task,
+            duration: selectedDuration,
+            note: note
+        });
+        setHasActiveCard(true);
+        setSelectedDuration(0);
+        setTask({});
+        setNote("");
         return;
     }
     const handleNote = (e)=>{
@@ -180,19 +189,16 @@ function SessionSettingSection(props){
     }
 
     return(
-        <div class="w-full flex flex-col justify-center items-center">
-            <div class="w-full flex flex-col justify-center items-center space-y-1">
-                <p class="text-xl text-dark font-bold ">Select the task</p>
-                <p class="text-sm text-alter">{message}</p>
-            </div>
-            <div class="w-full flex flex-col justify-center items-center pt-3 space-y-4">
-                <div class="w-full text-alter">
-                    {selectorMessage}
-                </div>
-                <div class="w-full">
+        <div className="w-full flex flex-col">
+            <p className="text-sm text-alter text-center">{message}</p>
+            <p className="text-sm text-alter text-start">{selectorMessage}</p>
+            <div className="w-full flex flex-col justify-center items-center space-y-3">
+                <div className="w-full">
+                    <p className="text-base font-bold text-black">Select Task Source:</p>
+                    <p className="text-sm font-normal text-shadow">(Choose from All Tasks or a Specific Issue)</p>
                     <select onChange={handleSelectGroup}
-                    class="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-sm h-full">
-                        <option value="">—— Select Issue or see all tasks ——</option>
+                    className="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 sm:text-base text-sm h-full">
+                        <option value="">—— Filter by Issue or Show All Tasks ——</option>
                         <option value="task">All incompleted tasks</option>
                         {issues && issues.length > 0 ?(
                             issues.map((issue)=>(
@@ -201,9 +207,11 @@ function SessionSettingSection(props){
                         ):(null)}
                    </select>
                 </div>
-                <div class="w-full">
+
+                <div className="w-full">
+                    <p className="text-base font-bold text-black">Select Task in Scope:</p>
                     <select onChange={handleSelectTask}
-                    class="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-sm h-full">
+                    className="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 sm:text-base text-sm h-full">
                         <option value="">—— Select task ——</option>
                         {tasks && tasks.length > 0 ?(
                             tasks.map((task)=>(
@@ -213,13 +221,14 @@ function SessionSettingSection(props){
                     </select>
                 </div>
             </div>
-            <div class="w-full pt-3 flex items-center space-x-3">
-                <label class="text-base text-black font-bold">Duration: </label>
+
+            <div className="w-full pt-3 flex flex-col">
+                <label className="text-base text-black font-bold">Session Duration: </label>
                 <select
                 name="duration"
                 value={selectedDuration}
                 onChange={handleDuration}
-                className="w-full bg-white border border-dark px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full bg-white border-2 border-primary py-2 px-3 text-center sm:text-base text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 required
                 >
                 <option value="">— Select Duration —</option>
@@ -229,22 +238,26 @@ function SessionSettingSection(props){
                 <option value="50">50 minutes (Deep Focus)</option>
                 </select>
             </div>
-            <div class="w-full pt-3 items-center">
-                <p class="w-full text-left text-base text-black font-bold">Note:</p>
+
+            <div className="w-full pt-3 flex flex-col">
+                <p className="w-full text-base text-black font-bold">Note: <label className="text-sm text-shadow font-normal">(no more than 50 characters)</label></p>
                 <input 
-                name="note" value={note} onChange={handleNote}
-                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                name="note"
+                value={note}
+                onChange={handleNote}
+                maxLength={50}
+                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 />
             </div>
-            <div class="w-full pt-3">
+            <div className="w-full pt-3">
                 <button
                     type="button"
                     onClick={handleAdd}
-                    disabled={!availableAdd || selectedDuration === 0}
+                    disabled={hasActiveCard || !availableAdd || selectedDuration === 0}
                     className={`w-full h-10 rounded-xl text-xl border-2
                         ${(!availableAdd || selectedDuration === 0)
                         ? 'bg-shadow text-white border-shadow cursor-not-allowed'
-                        : 'bg-dark text-white border-dark hover:bg-white hover:text-dark'}
+                        : 'cursor-pointer bg-dark text-white border-dark hover:bg-white hover:text-dark'}
                     `}
                     >
                     Add Session

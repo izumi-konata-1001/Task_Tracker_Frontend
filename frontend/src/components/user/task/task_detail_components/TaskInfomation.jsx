@@ -1,3 +1,5 @@
+import { RiDeleteBin5Line } from "react-icons/ri";
+
 import BASE_URL from "../../../../utils/api";
 import { useState } from "react";
 import { useNavigate,useLocation } from "react-router-dom";
@@ -17,6 +19,20 @@ function TaskInformation(props){
     const issue = props.issue;
 
     const [message,setMessage] = useState("");
+
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const hour = `${date.getHours()}`.padStart(2, '0');
+        const minute = `${date.getMinutes()}`.padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
+    function truncateText(text, maxLength, suffix = '...') {
+        if (!text) return '';
+        return text.length > maxLength ? text.slice(0, maxLength) + suffix : text;
+    }
 
     const handleIssue = (issueId)=>{
         navigate(`/issue/detail/${issueId}`,{state: { from: location.pathname }})
@@ -54,52 +70,66 @@ function TaskInformation(props){
         }
     }
     return(
-        <div class="w-full flex flex-col justify-center items-center">
-            <div class="w-full text-center mb-4">
-                <h2 class="text-xl font-semibold mb-2">{title}</h2>
-                <p class="text-sm">Created: {createdTime}</p>
-                <p class="text-sm text-shadow">Updated: {updatedTime}</p>
+        <div className="w-full flex flex-col justify-center items-center space-y-3">
+            <div className="w-full text-center">
+                <h2 className="text-2xl font-semibold text-primary break-words">{title}</h2>
+                <p className="text-sm md:text-base">Created: {formatDate(createdTime)}</p>
+                <p className="text-sm md:text-base text-shadow">Updated: {formatDate(updatedTime)}</p>
             </div>
 
-            <div class="w-full px-30 text-left text-black">
-                <div class="w-full flex flex-row">
-                    <lebel class="w-1/5 text-lg">Status:</lebel>
-                    <label class="w-4/5 text-base">{completeStatus === 1 ? "Completed" : "Incompleted"}</label>
-                </div>
-
-                <div class="w-full flex flex-row">
-                    <label class="w-1/5 text-lg">Descriprtion:</label>
-                    <label class="w-4/5 text-base leading-relaxed">{description}</label>
-                </div>
-            </div>
-            <div class="w-full flex-col pt-5">
-                <div class="px-30">
-                    <label class="text-alter">{message}</label>
-                </div>
-                <div class="w-full flex flex-row items-stretch px-30">
-                    <label class="w-1/5 self-center">Link to Issue:</label>
-
-                    <div class="w-3/5">
-                        {issue ? (
-                        <div onClick={()=>handleIssue(issue.id)}
-                        class="cursor-pointer bg-white border-2 border-dark rounded-lg p-3 shadow-sm w-full flex flex-col items-start hover:border-primary transition-colors duration-300">
-                            <h2 class="text-sm font-semibold text-dark">{issue.title}</h2>
-                            <p class="text-sm text-shadow">Created: {issue.created_at}</p>
-                        </div>
-                        ) : (
-                        <div class="text-sm text-shadow">no issue yet</div>
-                        )}
+            <div className="w-full text-left text-black space-y-2">
+                <div className="w-full flex flex-col space-y-1">
+                    <p className="w-full md:text-lg md:font-bold text-base font-medium break-words whitespace-pre-wrap">
+                        Status:
+                    </p>
+                    <div className="w-full px-3 py-2 bg-white rounded-md ">
+                        <p className={`w-full font-bold text-base break-words whitespace-pre-wrap ${completeStatus ? 'text-green' : 'text-alter'}`}>
+                            {completeStatus === 1 ? "Done" : "Unfinished"}
+                        </p>
                     </div>
+                </div>
 
-                    {issue && (
-                        <div class="w-1/5 pl-3 h-15">
-                        <button
-                            onClick={handleRemove}
-                            type="button"
-                            class="h-full w-full bg-alter border-2 border-alter rounded-lg text-white hover:bg-white hover:text-alter transition-colors duration-300"
-                        >
-                            remove
-                        </button>
+                <div className="w-full flex flex-col space-y-1">
+                    <p className="w-full md:text-lg md:font-bold text-base font-medium break-words whitespace-pre-wrap">Descriprtion:</p>
+                    <div className="w-full px-3 py-2 bg-white  rounded-md ">
+                        <p className="w-full text-base break-words whitespace-pre-wrap">{description}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="w-full flex-col">
+                <div className="w-full flex justify-center items-center">
+                    <label className="text-base text-alter">{message}</label>
+                </div>
+
+                <div className="w-full flex flex-col space-y-1">
+                    <p className="w-full md:text-lg md:font-bold text-base font-medium break-words whitespace-pre-wrap">
+                        Link to Issue:
+                    </p>
+                    {issue ? (
+                        <div className="w-full flex flex-row">
+                            <div onClick={()=>handleIssue(issue.id)}
+                            className="w-9/10 cursor-pointer bg-white border-2 border-dark rounded-lg p-3 shadow-sm flex flex-col items-start hover:border-3 hover:border-primary transition-colors duration-300">
+                                <h2 className="text-base font-bold text-dark break-words whitespace-pre-wrap"><label className="text-black text-lg">Issue Title: </label>{truncateText(issue.title, 15)}</h2>
+                                <p className="text-sm text-shadow">Created: {formatDate(issue.created_at)}</p>
+                                <p className="text-sm text-shadow">Description : {truncateText(issue.description, 20)}</p>
+                            </div>
+                            <div className="w-1/10 pl-2 flex items-stretch">
+                                <button
+                                    onClick={handleRemove}
+                                    type="button"
+                                    className="cursor-pointer w-full h-full cursor rounded-xl bg-alter text-white border-2 border-alter
+                                        hover:bg-white hover:text-alter 
+                                        font-medium transition-colors duration-300
+                                        flex items-center justify-center"
+                                >
+                                    <RiDeleteBin5Line className="text-2xl"/>
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="w-full bg-white p-2 rounded-md flex justify-center items-center">
+                            <label className="text-base text-shadow italic">no issue yet</label>
                         </div>
                     )}
                 </div>

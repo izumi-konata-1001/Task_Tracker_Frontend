@@ -10,6 +10,7 @@ function Login(){
     const navigate = useNavigate();
     const {login} = useAuth();
     const [message,setMessage] = useState("");
+    const [loginMessage, setLoginMessage] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -46,7 +47,7 @@ function Login(){
             if(response.ok){
                 const token = result.token;
                 login(token);
-                setMessage('Login successfully.');
+                setLoginMessage('Login successfully.');
                 console.log('Login successfully.');
                 navigate('/');
                 return;
@@ -71,43 +72,47 @@ function Login(){
     }
 
     return(
-        <div class="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col">
             <Header />
-            <div class="w-full flex-1 flex justify-center items-center">
-                <div class="bg-white rounded-lg shadow-md p-10 w-full max-w-md">
-                    <div class="text-center mb-3">
-                        <h1 class="text-2xl font-bold">Login</h1>
+            <div className="w-full flex-1 flex justify-center items-center py-10">
+                <div className="bg-white rounded-lg shadow-md p-10 w-full max-w-md">
+                    <div className="text-center mb-3">
+                        <h1 className="text-2xl font-bold">Login</h1>
                     </div>
-                    <div class="w-full text-left flex">
+                    <div className="w-full text-left flex">
                         <form onSubmit={handleLogin}
-                        class="space-y-6 w-full">
-                            <div class="w-full">
-                                <div class="w-full flex justify-between">
-                                    <label class="text-left text-sm font-medium">Email: </label>
+                        className="space-y-6 w-full">
+                            <div className="w-full">
+                                <div className="w-full flex justify-between">
+                                    <label className="text-left text-sm font-medium">Email: </label>
                                 </div>
                                 <input name="email" value={email} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
 
-                            <div class="w-full">
-                                <div class="w-full flex justify-between">
-                                    <label class="text-left text-sm font-medium">Password: </label>
+                            <div className="w-full">
+                                <div className="w-full flex justify-between">
+                                    <label className="text-left text-sm font-medium">Password: </label>
                                 </div>
                                 <input name="password" value={password} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
-                            <div class="w-full flex justify-center">
+                            <div className="w-full flex justify-center">
                                 <button type="submit"
-                                class="cursor-pointer w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
+                                className="cursor-pointer w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
                                     Login
                                 </button>
                             </div> 
                         </form>
                     </div>
-                    <div class="text-center">
-                        <p class="text-sm text-alter">{message}</p>
+                    <div className="text-center">
+                        {loginMessage ? (
+                            <p className="text-sm text-green">{loginMessage}</p>
+                        ):(
+                            <p className="text-sm text-alter">{message}</p>
+                        )}
                     </div>
 
                 </div>

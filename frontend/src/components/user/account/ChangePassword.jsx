@@ -89,54 +89,54 @@ function ChangePasword(){
 
     return(
         <div>
-            <div class="mb-4">
+            <div className="mb-4">
                 <BackButton path={from} />
             </div>
             
-            <div class="text-center mb-3">
-                <h1 class="text-2xl font-bold">Change Password</h1>
+            <div className="text-center mb-3">
+                <h1 className="text-2xl font-bold">Change Password</h1>
             </div>
-            <div class="w-full text-left flex">
+            <div className="w-full text-left flex">
                 <form onSubmit={handleSubmit}
-                class="space-y-6 w-full">
-                    <div class="w-full">
-                        <div class="w-full flex justify-between">
-                            <label class="text-left text-sm font-medium">Old Password: </label>
-                            <label class="text-right text-sm text-alter">{oldPasswordMessage}</label>
+                className="space-y-6 w-full">
+                    <div className="w-full">
+                        <div className="w-full flex justify-between">
+                            <label className="text-left text-sm font-medium">Old Password: </label>
+                            <label className="text-right text-sm text-alter">{oldPasswordMessage}</label>
                         </div>
                         <input name="oldPassword" value={oldPassword} onChange={handleChange}
-                        class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             required />
                     </div>
 
-                    <div class="w-full">
-                        <div class="w-full flex justify-between">
-                            <label class="text-left text-sm font-medium">New Password: </label>
-                            <label class="text-right text-sm text-alter">{newPasswordMessage}</label>
+                    <div className="w-full">
+                        <div className="w-full flex justify-between">
+                            <label className="text-left text-sm font-medium">New Password: </label>
+                            <label className="text-right text-sm text-alter">{newPasswordMessage}</label>
                         </div>
                         <input name="newPassword" value={newPassword} onChange={handleChange}
-                        class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             required />
                     </div>
 
-                    <div class="w-full">
-                        <div class="w-full flex justify-between">
-                            <label class="text-left text-sm font-medium">Confirm New Password: </label>
+                    <div className="w-full">
+                        <div className="w-full flex justify-between">
+                            <label className="text-left text-sm font-medium">Confirm New Password: </label>
                         </div>
                         <input name="confirmPassword" value={confirmPassword} onChange={handleChange}
-                        class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             required />
                     </div>
-                    <div class="w-full flex justify-center">
+                    <div className="w-full flex justify-center">
                         <button type="submit"
-                        class="w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
+                        className="w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
                             Submit
                         </button>
                     </div> 
                 </form>
             </div>
-            <div class="text-center">
-                <p class="text-sm text-alter">{message}</p>
+            <div className="text-center">
+                <p className="text-sm text-alter">{message}</p>
             </div>
             <RedirectAfter visible={showRedirect} delay={3000} path="/account" message="Redirecting..." />
         </div>

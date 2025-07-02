@@ -37,11 +37,11 @@ function RedirectAfter(props) {
   if (!visible) return null;
 
   return (
-    <div class="fixed top-20 right-10 border-2 border-dark bg-light text-black font-bold p-5 rounded-2xl shadow-md z-50">
-      <label class="text-center">{message}</label>
+    <div className="fixed top-20 right-10 border-2 border-dark bg-light text-black font-bold p-5 rounded-2xl shadow-md z-50">
+      <label className="text-center">{message}</label>
       <br />
       <label>
-            Redirecting in <label class="text-alter">{countdown}</label>...
+            Redirecting in <label className="text-alter">{countdown}</label>...
         </label>
     </div>
   );

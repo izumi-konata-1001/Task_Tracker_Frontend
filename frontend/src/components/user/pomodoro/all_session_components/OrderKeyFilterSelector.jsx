@@ -3,11 +3,11 @@ function OrderKeyFilterSelector(props){
     const orderKey = props.orderKey;
 
     return(
-        <div class="w-full flex justify-center item-center px-20">
+        <div className="w-full flex justify-center item-center">
             <select
             value={orderKey}
             onChange={(e)=>handleKey(e.target.value)}
-            class="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-sm h-full">
+            className="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-base h-full">
                 <option value="create_time">Create time</option>
                 <option value="duration">Duration</option>
             </select>

@@ -1,3 +1,5 @@
+import { MdAdd } from "react-icons/md";
+
 function AddTaskSelector(props){
     const availableTasks= props.availableTasks;
     const handleSelect = props.handleSelect;
@@ -5,16 +7,14 @@ function AddTaskSelector(props){
     const selectedTaskId = props.selectedTaskId;
     const alreadySelectedTasks = props.alreadySelectedTasks;
     return(
-        <div class="w-full px-40">
-            <div>
-                <label>Add more tasks:</label>
-            </div>
-            <div class="w-full flex flex-row">
-                <div class="w-5/6">
+        <div className="w-full">
+            <h3 className="w-full text-lg text-black font-medium">Add more tasks: <label className="text-sm text-shadow font-normal">(no more than 5 tasks)</label></h3>
+            <div className="w-full flex flex-row">
+                <div className="w-9/10">
                     <select
                     value={selectedTaskId}
                     onChange={handleSelect}
-                    class="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-sm h-full">
+                    className="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 text-sm h-full">
                         <option value=""> —— Select A Task ——</option>
                         {availableTasks.map((task)=>(
                             <option key={task.id} value={task.id}>
@@ -24,18 +24,20 @@ function AddTaskSelector(props){
                         }
                     </select>
                 </div>
-                <div class="w-1/6 pl-2">
+                <div className="w-1/10 pl-2">
                     <button
-                    type="button"
-                    onClick={handleAdd}
-                    disabled={availableTasks.length === 0 || alreadySelectedTasks.length >= 5}
-                    class={`w-full h-full py-2 px-3 text-sm rounded-md border-2 font-medium transition-colors duration-300 ${
-                        availableTasks.length === 0 || alreadySelectedTasks.length >= 5
-                        ? "bg-gray-300 text-white border-gray-300 cursor-not-allowed"
-                        : "bg-primary text-white border-primary hover:bg-white hover:text-primary"
-                    }`}
+                        type="button"
+                        onClick={handleAdd}
+                        disabled={availableTasks.length === 0 || alreadySelectedTasks.length >= 5}
+                        className={`w-full h-full rounded-xl border-2 font-medium transition-colors duration-300
+                        flex items-center justify-center
+                        ${
+                            availableTasks.length === 0 || alreadySelectedTasks.length >= 5
+                            ? "bg-gray-300 text-white border-gray-300 cursor-not-allowed"
+                            : "cursor-pointer bg-primary text-white border-primary hover:bg-white hover:text-primary"
+                        }`}
                     >
-                        add
+                        <MdAdd className="text-2xl font-semibold" />
                     </button>
                 </div>
             </div>

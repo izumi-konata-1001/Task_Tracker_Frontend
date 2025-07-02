@@ -1,3 +1,5 @@
+import { RiDeleteBin5Line } from "react-icons/ri";
+
 import { useNavigate,useLocation } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import BASE_URL from "../../../../utils/api";
@@ -10,6 +12,16 @@ function SessionCard(props){
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const hour = `${date.getHours()}`.padStart(2, '0');
+        const minute = `${date.getMinutes()}`.padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
 
     const handleSession = (sessionId)=>{
         navigate(`/pomodoro/detail/${sessionId}`,{state: { from: location.pathname }})
@@ -45,38 +57,42 @@ function SessionCard(props){
         }
     }
     return(
-        <div class="w-full flex flex-row">
+        <div className="w-full flex flex-row">
             <div onClick={()=>handleSession(session.id)}
-            class="cursor-pointer w-3/4 flex flex-row justify-center items-center px-4 py-2 bg-white border-2 border-dark rounded-xl hover:border-primary transition-colors duration-300"
+            className="cursor-pointer w-9/10 flex flex-row justify-center items-center px-4 py-2 bg-white border-2 border-dark rounded-md 
+            hover:border-primary hover:border-3 transition-colors duration-300"
             >
-                <div class="w-3/5 felx flex-col justify-start">
-                    <div class="w-full">
-                        <label class="text-black text-base">Note: </label>
+                <div className="w-3/5 felx flex-col justify-start">
+                    <div className="w-full sm:flex sm:flex-row flex flex-col">
+                        <label className="text-black text-base">Note: </label>
                         {session.note ? (
-                            <label class="pl-5 text-black">{session.note}</label>
+                            <label className="sm:pl-5 text-dark">{session.note}</label>
                         ):(
-                            <label class="pl-5 text-shadow text-base">/</label>
+                            <label className="sm:pl-5 text-shadow text-base">null</label>
                         )}
                     </div>
-                    <div class="w-full">
-                        <label class="text-black text-base">Started at:</label>
-                        <label class="pl-5 text-green">{session.start_time}</label>
+                    <div className="w-full sm:flex sm:flex-row flex flex-col">
+                        <label className="text-black text-base">Started at:</label>
+                        <label className="sm:pl-5 text-green">{formatDate(session.start_time)}</label>
                     </div>
-                    <div class="w-full">
-                        <label class="text-black text-base">Ended at:</label>
-                        <label class="pl-5 text-alter">{session.estimated_end_time}</label>
+                    <div className="w-full sm:flex sm:flex-row flex flex-col">
+                        <label className="text-black text-base">Ended at:</label>
+                        <label className="sm:pl-5 text-primary">{formatDate(session.estimated_end_time)}</label>
                     </div>
                 </div>
 
-                <div class="w-2/5 flex justify-end items-center">
-                    <label class="text-black text-xl">Druation: </label>
-                    <label class="pl-5 text-primary text-xl">{session.duration_minutes} mins</label>
+                <div className="w-2/5 flex flex-col justify-center items-end">
+                    <label className="text-black text-base">Druation: </label>
+                    <label className=" text-primary text-base font-bold">{session.duration_minutes} mins</label>
                 </div>
             </div>
-            <div class="w-1/4 pl-3">
+            <div className="w-1/10 pl-2">
                 <button type="button" onClick={handleDelete}
-                class="w-full h-full bg-alter border-2 border-alter rounded-xl text-white hover:bg-white hover:text-alter">
-                    Remove
+                        className="cursor-pointer w-full h-full  rounded-xl bg-alter text-white border-2 border-alter
+                        hover:bg-white hover:text-alter 
+                        font-medium transition-colors duration-300
+                        flex items-center justify-center">
+                    <RiDeleteBin5Line className="text-2xl"/>
                 </button>
             </div>
         </div>

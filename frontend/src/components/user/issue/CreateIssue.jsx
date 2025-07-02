@@ -150,29 +150,34 @@ const handleAdd = () => {
 
 
     return(
-        <div class="w-full h-screen flex flex-col items-center justify-center">
-            <div class="w-full px-40">
+        <div className="w-full pt-10 pb-5 md:px-20 px-10">
+            <div className="w-full flex justify-start">
                 <BackButton path={from} />
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
-                <h1 class="text-2xl font-bold">Create New Issue</h1>
+            <div className="w-full flex justify-center items-center pt-5">
+                <h1 className="text-xl font-bold
+                md:text-2xl md:font-semibold">Create New Task</h1>
             </div>
-            <div class="w-full pt-5">
-                <div class="w-full pb-5">
+
+            <div className="w-full pt-5 space-y-3">
+                <div className="w-full">
                     <CreateIssueForm title={title} description={description} handleChange={handleChange}/>
                 </div>
-                <div class='w-full pb-2'>
+                <div className='w-full'>
                     <SelectedTaskList alreadySelectedTasks={alreadySelectedTasks} handleDelete={handleDelete}/>
                 </div>
-                <div class="w-full pb-3">
+                <div className="w-full">
                     <AddTaskSelector availableTasks={availableTasks} selectedTaskId={selectedTaskId} handleSelect={handleSelect} handleAdd={handleAdd} alreadySelectedTasks={alreadySelectedTasks}/>
                 </div>
 
-                <div class="w-full">
-                    <div class="w-full px-40 text-shadow">{message}</div>
-                    <div class="w-full"><SubmitButton handleSubmit={handleSubmit} /></div>
+                <div className="w-full pt-5">
+                    <div className="w-full">
+                        <SubmitButton handleSubmit={handleSubmit} />
+                    </div>
+                    <div className="w-full text-alter text-sm">
+                        {message}
+                    </div>
                 </div>
-                
             </div>
         </div>
     )

@@ -4,20 +4,22 @@ function CreateIssueForm(props){
     const description = props.decription;
 
     return(
-        <div class="w-full px-40 flex justify-center item-center">
-            <form class="w-full space-y-6">
+        <div className="w-full flex justify-center item-center">
+            <form className="w-full space-y-3">
                 <div>
-                    <label class="block text-lg font-medium text-black mb-1">Title:</label>
+                    <label className="block text-lg font-medium text-black">Title: <label className="text-sm text-shadow font-normal">(no more than 50 characters)</label></label>
                     <input name="title" value={title} onChange={handleChange}
-                        class="w-full px-3 py-2 bg-white border border-dark rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        maxLength={50}
+                        className="w-full px-3 py-2 bg-white border-2 border-shadow rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     required />
                 </div>
 
                 <div>
-                    <label class="block text-lg font-medium text-black mb-1">Description:</label>
+                    <label className="block text-lg font-medium text-black">Description: <label className="text-sm text-shadow font-normal">(no more than 150 characters)</label></label>
                     <textarea name="description" value={description} onChange={handleChange}
-                    class="w-full px-3 py-2 bg-white border border-dark rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    rows="4"
+                        className="w-full px-3 py-2 bg-white border-2 border-shadow rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        rows="4"
+                        maxLength="150"
                     required >
                     </textarea>
                 </div>

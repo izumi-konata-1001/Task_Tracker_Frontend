@@ -9,13 +9,12 @@ import RedirectAfter from "../../RedirectAfter";
 import BackButton from "../../BackButton";
 import TaskInformation from "./task_detail_components/TaskInfomation";
 import EditTaskForm from "./task_detail_components/EditTaskForm";
-import SessionCard from "./task_detail_components/SessionCard";
+import SessionList from "./task_detail_components/SessionList";
 
 function TaskDetail(){
     const {token} = useAuth();
     const { id } = useParams();
-
-    const navigate = useNavigate();
+    
     const location = useLocation();
     const from = location.state?.from;
     console.log(from);
@@ -124,52 +123,42 @@ function TaskDetail(){
     },[]);
 
     return(
-        <div class="w-full pb-10 pt-10 flex flex-col items-center justify-center">
-            <div class="w-full px-30">
+        <div className="w-full pt-10 pb-5 md:px-20 px-10 space-y-5">
+            <div className="w-full flex justify-start">
                 <BackButton path={from}/>
             </div>
-            <div class="w-full px-30 flex justify-center items-center">
-                <div class="w-full text-center text-alter">{message}</div>
+
+            <div className="w-full flex justify-center items-center">
+                <div className="w-full text-center text-base text-alter">{message}</div>
             </div>
+
             {validFetch ? (
-                <div class="w-full pt-5">
+                <div className="w-full">
                     <TaskInformation task={task} issue={issue} fetchTaskDetail={fetchTaskDetail}/>
                 </div>
-            ):(<p class="text-shadow">No auth to view task detail</p>)}
+            ):(<p className="text-shadow text-base">No auth to view task detail</p>)}
 
             {validFetch ? (
-            <div class="w-full px-30 pt-5 flex flex-row">
-                <div class="w-1/5">
-                    <p class="text-alter text-base">{sessionMessage}</p>
-                    <p class="text-black text-base">Sessions: </p>
+                <div className="w-full">
+                    <SessionList sessions={sessions} sessionMessage={sessionMessage} setSessionMessage={setSessionMessage} fetchTaskDetail={fetchTaskDetail}/>
                 </div>
-                <div class="w-4/5 flex flex-col space-y-2">
-                    {sessions.length > 0? (
-                        sessions.map((session)=>{
-                            return <SessionCard session={session} fetchTaskDetail={fetchTaskDetail} setSessionMessage={setSessionMessage}/>
-                        })
-                    ):(
-                        <p class="text-shadow text-base">No session yet</p>
-                    )}
-                </div>
-            </div>
-            ):(<p class="text-shadow">No auth to view session list</p>)}
+            ):(<p className="text-shadow text-base">No auth to view session list</p>)}
 
             {validFetch ? (
-            <div class="w-full pt-5 px-30 flex flex-col space-y-3 justify-center items-center text-center">
+            <div className="w-full flex flex-col space-y-3 justify-center items-center text-center">
                 <button onClick={onShow} type="button"
-                class="cursor: pointer w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-md hover:bg-light hover:text-primary transition-colors duration-300">
+                className="cursor-pointer w-full bg-primary text-white border-2 border-primary  px-2 py-1 rounded-xl hover:bg-light hover:text-primary transition-colors duration-300">
                     Edit Task
                 </button>
                 <button onClick={handleDelete} type="button"
-                class="cursor: pointer w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-md hover:bg-light hover:text-black transition-colors duration-300">
+                className="cursor-pointer w-full bg-alter text-white border-2 border-alter  px-2 py-1 rounded-xl hover:bg-light hover:text-alter transition-colors duration-300">
                     Delete Task
                 </button>
             </div>
             ):(null)}
 
             {showEditTask && validFetch ?(
-                <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+                <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
                     <EditTaskForm task={task} onCancel={onCancel} fetchTaskDetail={fetchTaskDetail}/>
                 </div>):(null)
             }

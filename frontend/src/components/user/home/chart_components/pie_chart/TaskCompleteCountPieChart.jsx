@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-function CompleteCountPieChart({task}){
+function TaskCompleteCountPieChart({task}){
 
   const data = [
     { name: "Completed", value: task.completed},
@@ -13,7 +13,7 @@ function CompleteCountPieChart({task}){
   };
 
   return(
-    <div className="w-full flex flex-col items-center justify-center">
+    <div className="min-h-[230px] w-full flex flex-col items-center justify-center bg-white rounded-xl p-3">
         <PieChart width={200} height={200}>
           <Pie
           data={data}
@@ -44,4 +44,4 @@ function CompleteCountPieChart({task}){
   )
 }
 
-export default CompleteCountPieChart;
+export default TaskCompleteCountPieChart;

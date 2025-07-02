@@ -50,7 +50,7 @@ function SessionBarChart() {
   return (
     <div className="w-full min-h-[300px]">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-dark">
+        <h2 className="mb:text-xl mb:font-bold text-base font-normal text-dark">
           Pomodoro Summary - {new Date().getFullYear()}
         </h2>
         <select

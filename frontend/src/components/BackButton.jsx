@@ -8,10 +8,10 @@ function BackButton(props) {
   return (
     <button
       onClick={() => navigate(path|| -1)}
-      class="flex items-center gap-2 text-sm text-white bg-dark hover:text-dark border-2 border-dark hover:bg-white font-medium px-2 py-1 rounded transition-colors duration-300"
+      className="cursor-pointer flex items-center text-white bg-dark hover:text-dark border-2 border-dark hover:bg-white font-medium py-1 px-2 rounded-xl transition-colors duration-300
+      gap-2 text-base"
     >
-      <IoArrowBack class="text-lg" />
-      Back
+      <IoArrowBack /> Back
     </button>
   );
 }

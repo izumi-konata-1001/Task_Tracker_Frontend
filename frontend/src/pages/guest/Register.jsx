@@ -8,6 +8,7 @@ function Register(){
     const [showRedirect, setShowRedirect] = useState(false);
 
     const [message, setMessage] = useState("");
+    const [registerMessage,setRegisterMessage] = useState("");
     const [emailMessage, setEmailMessage] = useState("");
     const [usernameMessage, setUsernameMessage] = useState("");
     const [passwordMessage, setPasswordMessage] = useState("");
@@ -34,6 +35,7 @@ function Register(){
         e.preventDefault();
 
         setMessage("");
+        setRegisterMessage("");
         setEmailMessage("");
         setUsernameMessage("");
         setPasswordMessage("")
@@ -66,7 +68,7 @@ function Register(){
 
             const result = await response.json();
             if(response.ok){
-                setMessage('Registered successfully.');
+                setRegisterMessage('Registered successfully.');
                 console.log('Registered successfully, token:', result.token);
                 setShowRedirect(true);
                 return;
@@ -92,65 +94,70 @@ function Register(){
     }
 
     return(
-        <div class="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col">
             <Header />
-            <div class="w-full flex-1 flex justify-center items-center">
-                <div class="bg-white rounded-lg shadow-md p-10 w-full max-w-md">
-                    <div class="text-center mb-3">
-                        <h1 class="text-2xl font-bold">Register</h1>
+            <div 
+            className="w-full flex-1 flex py-20 justify-center items-center">
+                <div className="bg-white rounded-lg shadow-md p-10 w-full max-w-md">
+                    <div className="text-center mb-3">
+                        <h1 className="text-2xl font-bold">Register</h1>
                     </div>
-                    <div class="w-full text-left flex">
+                    <div className="w-full text-left flex">
                         <form onSubmit={handleSubmit}
-                        class="space-y-6 w-full">
-                            <div class="w-full">
-                                <div class="w-full flex justify-between">
-                                    <label class="text-left text-sm font-medium">Email: </label>
-                                    <label class="text-right text-sm text-alter">{emailMessage}</label>
+                        className="space-y-6 w-full">
+                            <div className="w-full">
+                                <div className="w-full flex justify-between">
+                                    <label className="text-left text-sm font-medium">Email: </label>
+                                    <label className="text-right text-sm text-alter">{emailMessage}</label>
                                 </div>
                                 <input name="email" value={email} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
 
-                            <div class="w-full">
-                                <div class="w-full flex justify-between">
-                                    <label class="text-left text-sm font-medium">Username: </label>
-                                    <label class="text-right text-sm text-alter">{usernameMessage}</label>
+                            <div className="w-full">
+                                <div className="w-full flex justify-between">
+                                    <label className="text-left text-sm font-medium">Username: </label>
+                                    <label className="text-right text-sm text-alter">{usernameMessage}</label>
                                 </div>
                                 <input name="username" value={username} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
 
-                            <div class="w-full">
-                                <div class="w-full flex justify-between">
-                                    <label class="text-left text-sm font-medium">Password: </label>
-                                    <label class="text-right text-sm text-alter">{passwordMessage}</label>
+                            <div className="w-full">
+                                <div className="w-full flex justify-between">
+                                    <label className="text-left text-sm font-medium">Password: </label>
+                                    <label className="text-right text-sm text-alter">{passwordMessage}</label>
                                 </div>
                                 <input name="password" value={password} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
 
-                            <div class="w-full">
-                                <div class="w-full flex">
-                                    <label class="text-left text-sm font-medium">Confirm Password: </label>
+                            <div className="w-full">
+                                <div className="w-full flex">
+                                    <label className="text-left text-sm font-medium">Confirm Password: </label>
                                 </div>
                                 <input name="confirmPassword" value={confirmPassword} onChange={handleChange}
-                                class="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full block bg-white border border-dark px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                     required />
                             </div>
 
-                            <div class="w-full flex justify-center">
+                            <div className="w-full flex justify-center">
                                 <button type="submit"
-                                class="w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
+                                className="w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
                                     Register
                                 </button>
                             </div> 
                         </form>
                     </div>
-                    <div class="text-center pt-4">
-                        <p class="text-sm text-alter">{message}</p>
+                    <div className="text-center pt-4">
+                        {registerMessage ? (
+                            <p className="text-sm text-green">{registerMessage}</p>
+                        ):(
+                            <p className="text-sm text-alter">{message}</p>
+                        )}
                     </div>
                 </div>
             </div>

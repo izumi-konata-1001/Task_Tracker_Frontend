@@ -66,17 +66,17 @@ useEffect(() => {
   fetchAllTasks();
 }, [order, page]);
     return(
-        <div class="w-full">
-            <div class="w-full flex justify-center items-center pt-5">
-                <h1 class="text-2xl font-bold">Tasks</h1>
+        <div className="w-full pb-5 md:px-20 px-10">
+            <div className="w-full flex justify-center items-center pt-5">
+                <h1 className="mb:text-2xl text-xl font-bold">All Tasks</h1>
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
+            <div className="w-full flex justify-center items-center pt-5 ">
                 <CreateButton section={"task"}/>
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
+            <div className="w-full flex justify-center items-center pt-5 ">
                 <OrderSortButton handleClick={handleClick} order={order} />
             </div>
-            <div class="w-full pt-5 px-20 flex flex-col space-y-3">
+            <div className="w-full pt-5  flex flex-col space-y-3">
                 {tasks.length > 0 ? (
                 tasks.map((task)=>(
                     <TaskCard key={task.id} task={task}/>

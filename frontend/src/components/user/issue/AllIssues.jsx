@@ -72,17 +72,17 @@ function AllIssues(){
 
 
     return(
-        <div class="w-full">
-            <div class="w-full flex justify-center items-center pt-5">
-                <h1 class="text-2xl font-bold">Issues</h1>
+        <div className="w-full pb-5">
+            <div className="w-full flex justify-center items-center pt-5">
+                <h1 className="text-2xl font-bold">All Issues</h1>
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
+            <div className="w-full flex justify-center items-center pt-5 md:px-20 px-10">
                 <CreateButton section={"issue"}/>
             </div>
-            <div class="w-full flex justify-center items-center pt-5">
+            <div className="w-full flex justify-center items-center pt-5  md:px-20 px-10">
                 <FilterButton handleClick={handleClick} order={order} />
             </div>
-            <div class="w-full pt-5 px-20 flex flex-col space-y-3">
+            <div className="w-full pt-5 md:px-20 px-10 flex flex-col space-y-3">
                 {issues.length > 0 ?(
                     issues.map((issue) =>(
                         <IssueCard key={issue.id} issue={issue}/>

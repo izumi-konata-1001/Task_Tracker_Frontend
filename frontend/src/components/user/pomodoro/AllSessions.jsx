@@ -154,22 +154,24 @@ function AllSession(){
     }
 
     return(
-        <div class="w-full pt-5 pb-10 px-40 flex flex-col">
-            <div class="w-full flex flex-col justify-center items-center">
-                <p class="text-black text-3xl font-semibold">All sessions</p>
-                <p class="text-alter text-base">{message}</p>
+        <div className="w-full pb-5 md:px-20 px-10 space-y-5">
+            <div className="w-full flex flex-col justify-center items-center">
+                <p className="text-black text-3xl font-semibold">All sessions</p>
+                <p className="text-alter text-base">{message}</p>
             </div>
-            <div class="w-full pt-5">
+            <div className="w-full space-y-1">
+                <h3 className="sm:text-lg sm:font-bold text-base font-medium text-dark">View Sessions For:</h3>
                 <TypeFilterButton handleType={handleType} selectedTaskId={selectedTaskId} tasks={tasks}/>
             </div>
-            <div class="w-full pt-5">
+            <div className="w-full space-y-1">
+                <h3 className="sm:text-lg sm:font-bold text-base font-medium text-dark">Sort Sessions By:</h3>
                 <OrderKeyFilterSelector handleKey={handleKey} orderKey={orderKey}/>
             </div>
-            <div class="w-full pt-5">
+            <div className="w-full">
                 {orderKey == "create_time" ? (<OrderSortButton handleClick={handleOrder} order={order}/>):(null)}
                 {orderKey == "duration" ? (<DurationSortButton handleClick={handleOrder} order={order} />) : (null)}
             </div>
-            <div class="w-full pt-5">
+            <div className="w-full">
                 <SessionList sessions={sessions}/>
             </div>
             <div className=" w-full flex justify-center items-center space-x-2 py-4">
@@ -183,7 +185,8 @@ function AllSession(){
                     }}
                     disabled={page === 1}
                     className="px-3 py-1 text-white border-2 border-primary bg-primary rounded-xl 
-                    hover:text-primary hover:bg-white disabled:opacity-50"
+                    hover:text-primary hover:bg-white
+                    disabled:opacity-50 disabled:border-shadow disabled:text-shadow disabled:bg-white"
                 >
                     Prev
                 </button>
@@ -217,7 +220,8 @@ function AllSession(){
                     }}
                     disabled={page * pageSize >= total}
                     className="px-3 py-1 text-white border-2 border-primary bg-primary rounded-xl 
-                    hover:text-primary hover:bg-white disabled:opacity-50"
+                    hover:text-primary hover:bg-white
+                    disabled:opacity-50 disabled:border-shadow disabled:text-shadow disabled:bg-white"
                 >
                     Next
                 </button>

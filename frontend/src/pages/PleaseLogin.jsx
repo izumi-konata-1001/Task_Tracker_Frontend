@@ -21,8 +21,8 @@ function PleaseLogin(){
     },[navigate]);
 
     return(
-        <div class="w-full h-full flex flex-col">
-            <div class="w-full flex-1 flex justify-center items-center">
+        <div className="w-full h-full flex flex-col">
+            <div className="w-full flex-1 flex justify-center items-center">
                 <div className="bg-white rounded-lg shadow-md p-10 w-full max-w-md text-center">
                     <p className="text-lg mb-2">Please login</p>
                     <p className="text-sm text-gray-500">

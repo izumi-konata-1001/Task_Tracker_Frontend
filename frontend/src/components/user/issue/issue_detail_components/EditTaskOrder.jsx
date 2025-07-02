@@ -98,34 +98,34 @@ function EditTaskOrder(props) {
     };
 
     return (
-        <div class="flex justify-center items-center h-full w-full p-8">
-            <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-bold text-center mb-4">Edit Task Order</h2>
-                <p class="text-center text-shadow">{message}</p>
+        <div className="flex justify-center items-center h-full w-full p-8">
+            <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
+                <h2 className="text-xl font-bold text-center mb-4">Edit Task Order</h2>
+                <p className="text-center text-shadow">{message}</p>
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
-                        <div class="space-y-3">
+                        <div className="space-y-3">
                             {tasks.length > 0 ? (
                             tasks.map((task) => <SortableItem key={task.id} task={task} />)
                             ) : (
-                            <p class="text-center text-sm text-shadow">No tasks in this issue.</p>
+                            <p className="text-center text-sm text-shadow">No tasks in this issue.</p>
                             )}
                         </div>
                     </SortableContext>
                 </DndContext>
 
-                <div class="mt-5 flex flex-col space-y-3 justify-center">
+                <div className="mt-5 flex flex-col space-y-3 justify-center">
                     <button onClick={handleSave}
                         disabled={tasks.length < 2}
                         className={`border-2 font-medium px-6 py-2 rounded-md transition-colors duration-300
                         ${tasks.length < 2 
                         ? 'bg-shadow text-white border-shadow cursor-not-allowed' 
-                        : 'bg-primary text-white border-primary hover:bg-white hover:text-primary cursor-pointer'}`}
+                        : 'cursor-pointer bg-primary text-white border-primary hover:bg-white hover:text-primary'}`}
                     >
                         Save
                     </button>
                     <button onClick={()=>{onCancelEditOrder()}}
-                        class="cursor-pointer bg-primary border-2 border-primary text-white hover:bg-white hover:text-primary font-medium px-6 py-2 rounded-md transition-colors duration-300"
+                        className="cursor-pointer bg-primary border-2 border-primary text-white hover:bg-white hover:text-primary font-medium px-6 py-2 rounded-md transition-colors duration-300"
                     >
                         Cancel
                     </button>
