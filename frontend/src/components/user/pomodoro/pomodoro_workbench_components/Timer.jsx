@@ -7,6 +7,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import SessionCard from "./SessionCard";
 
 function Timer(props) {
+    const alarmAudio = new Audio('/sounds/alarm.mp3');
     const {token} = useAuth()
     const intervalRef = useRef(null);
 
@@ -104,6 +105,13 @@ function Timer(props) {
                 setPauseAvaliable(false);
                 setCancelAvaliable(true);
                 setSaveAvaliable(true);
+
+                try {
+                    alarmAudio.play();
+                } catch (error) {
+                    console.error('Audio play failed:', error);
+                }
+
                 return 0;
             }
             return prev -1;
@@ -253,7 +261,7 @@ function Timer(props) {
                             disabled={!startAvaliable}
                             className={`w-1/2 h-10  rounded-xl
                                 ${startAvaliable ?(
-                                        'bg-green border-3 border-green text-white text-xl hover:bg-white hover:text-green'
+                                        'cursor-pointer bg-green border-3 border-green text-white text-xl hover:bg-white hover:text-green'
                                 ):(
                                     'bg-shadow text-white border-shadow cursor-not-allowed'
                                 )}`}>
@@ -264,7 +272,7 @@ function Timer(props) {
                                 disabled={!pauseAvaliable}
                                 className={`w-1/2 h-10 rounded-xl
                                 ${pauseAvaliable ? (
-                                    ' bg-alter border-3 border-alter text-white text-xl hover:bg-white hover:text-alter')
+                                    ' cursor-pointer bg-alter border-3 border-alter text-white text-xl hover:bg-white hover:text-alter')
                                 :(
                                     'bg-shadow text-white border-shadow cursor-not-allowed'
                                 )}`}>
@@ -272,7 +280,7 @@ function Timer(props) {
                                 </button>
                             ): (
                                 <button type="button" onClick={handleResume}
-                                className="w-1/2 h-10 bg-primary border-3 border-primary rounded-xl text-white text-xl hover:bg-white hover:text-primary">
+                                className="cursor-pointer w-1/2 h-10 bg-primary border-3 border-primary rounded-xl text-white text-xl hover:bg-white hover:text-primary">
                                     Resume
                                 </button>
                             )}
@@ -282,7 +290,7 @@ function Timer(props) {
                             disabled={!cancelAvaliable}
                             className={`w-full h-10 rounded-xl
                             ${cancelAvaliable ?(
-                                ' bg-primary border-3 border-primary  text-white text-xl hover:bg-white hover:text-primary'
+                                ' cursor-pointer bg-primary border-3 border-primary  text-white text-xl hover:bg-white hover:text-primary'
                             ):(
                                 'bg-shadow text-white border-shadow cursor-not-allowed'
                             )}
@@ -353,7 +361,7 @@ function Timer(props) {
                     disabled={!saveAvaliable}
                     className={`w-full h-10 rounded-xl
                     ${saveAvaliable ?(
-                        ' bg-primary border-3 border-primary  text-white text-xl hover:bg-white hover:text-primary'
+                        ' cursor-pointer bg-primary border-3 border-primary  text-white text-xl hover:bg-white hover:text-primary'
                     ):(
                         'bg-shadow text-white border-shadow cursor-not-allowed'
                     )}
