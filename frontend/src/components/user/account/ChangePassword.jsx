@@ -129,7 +129,7 @@ function ChangePasword(){
                     </div>
                     <div className="w-full flex justify-center">
                         <button type="submit"
-                        className="w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
+                        className="cursor-pointer w-full bg-primary text-white  border-primary border-2 hover:bg-white hover:text-primary  font-semibold px-6 py-2 rounded-md transition-colors duration-300">
                             Submit
                         </button>
                     </div> 

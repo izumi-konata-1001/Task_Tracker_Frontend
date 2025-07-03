@@ -22,7 +22,7 @@ function CreateButton(props){
     return(
         <div className="w-full flex justify-center item-center">
             <button onClick={handleClick}
-            className=" w-full h-9 bg-primary border-2 border-primary text-white px-2 py-1 rounded-md hover:bg-white hover:text-primary transition-colors duration-300">
+            className="cursor-pointer w-full h-9 bg-dark border-2 border-dark text-white px-2 py-1 rounded-xl hover:bg-white hover:text-dark transition-colors duration-300">
                 Create {getSectionLabel(currentSection)}
             </button>
         </div>

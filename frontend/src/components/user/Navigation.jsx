@@ -56,7 +56,7 @@ function Navigation() {
               handleLogout();
               handleOpen
             }}
-            className="text-left hover:text-alter"
+            className="cursor-pointer text-left hover:text-alter"
           >
             Logout
           </button>
