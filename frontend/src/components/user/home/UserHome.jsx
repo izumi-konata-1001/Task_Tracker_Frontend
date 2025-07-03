@@ -85,7 +85,7 @@ function UserHome(){
                 {task.total > 0 ? (
                     <TaskCompleteCountPieChart task={task} />
                 ):(
-                    <div className="min-h-[230px] flex justify-center items-center bg-white rounded-xl text-black">
+                    <div className="min-h-[280px] flex justify-center items-center bg-white rounded-xl text-black">
                         No tasks to build Chart.
                     </div>
                 )}
@@ -94,7 +94,7 @@ function UserHome(){
                 {issue.total > 0 ? (
                     <IssueCompleteCountPieChart issue={issue} />
                 ):(
-                    <div className="min-h-[230px] flex justify-center items-center bg-white rounded-xl text-black">
+                    <div className="min-h-[280px] flex justify-center items-center bg-white rounded-xl text-black">
                         No issue to build Chart.
                     </div>
                 )}
@@ -103,7 +103,7 @@ function UserHome(){
                 {session.total > 0 ? (
                     <SessionDurationPieChart session={session} />
                 ):(
-                    <div className="min-h-[230px] flex justify-center items-center bg-white rounded-xl text-black">
+                    <div className="min-h-[280px] flex justify-center items-center bg-white rounded-xl text-black">
                         No session to build Chart.
                     </div>     
                 )}

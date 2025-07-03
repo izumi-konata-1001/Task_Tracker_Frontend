@@ -15,7 +15,8 @@ function SessionDurationPieChart({session}){
     };
 
     return(
-        <div className="min-h-[230px] w-full flex flex-col items-center justify-center bg-white rounded-xl p-3">
+        <div className="min-h-[280px] w-full flex flex-col items-center justify-center bg-white rounded-xl p-3">
+            <p className="text-black text-base font-medium">Focus Session Time Analysis</p>
             <PieChart width={200} height={200}>
                 <Pie
                     data={data}

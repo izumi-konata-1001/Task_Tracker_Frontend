@@ -156,7 +156,7 @@ const handleAdd = () => {
             </div>
             <div className="w-full flex justify-center items-center pt-5">
                 <h1 className="text-xl font-bold
-                md:text-2xl md:font-semibold">Create New Task</h1>
+                md:text-2xl md:font-semibold">Create New Issue</h1>
             </div>
 
             <div className="w-full pt-5 space-y-3">
