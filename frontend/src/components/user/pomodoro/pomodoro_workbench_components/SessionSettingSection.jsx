@@ -39,7 +39,7 @@ function SessionSettingSection(props){
                 return;
             }else if(response.status == 404){
                 setIssues(null);
-                setSelectorSourceMessage('No issue has imcompleted task or no issue created yet.');
+                setSelectorSourceMessage('No issue has imcompleted task or no issue created yet. You can only select from incompleted tasks');
                 return;
             }
             else{
@@ -93,7 +93,7 @@ function SessionSettingSection(props){
                 console.log('Get all incompleted tasks succesffuly.');
                 return;
             }else if(response.status == 404){
-                setSelectorTaskMessage('No incompleted tasks.');
+                setSelectorTaskMessage('No task is incompleted. Please create task in progressing first.');
                 return;
             }else{
                 setSelectorTaskMessage('Fetch all incompleted tasks failed.');
@@ -194,8 +194,8 @@ function SessionSettingSection(props){
             <p className="text-sm text-alter text-center">{message}</p>
             
             <div className="w-full flex flex-col justify-center items-center space-y-3">
-                <p className="text-sm text-alter text-start">{selectorSourceMessage}</p>
                 <div className="w-full">
+                    <p className="w-full text-sm text-alter text-start">{selectorSourceMessage}</p>
                     <p className="text-base font-bold text-black">Select Task Source:</p>
                     <p className="text-sm font-normal text-shadow">(Choose from All Tasks or a Specific Issue)</p>
                     <select onChange={handleSelectGroup}
