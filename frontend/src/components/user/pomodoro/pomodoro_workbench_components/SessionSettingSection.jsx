@@ -11,7 +11,8 @@ function SessionSettingSection(props){
     const setHasActiveCard = props.setHasActiveCard;
 
     const [message,setMessage] = useState("");
-    const [selectorMessage, setSelectorMessage] = useState("");
+    const [selectorSourceMessage, setSelectorSourceMessage] = useState("");
+    const [selectorTaskMessage, setSelectorTaskMessage] = useState("");
 
     const [note, setNote] = useState("");
     const [issues,setIssues] = useState([]);
@@ -38,11 +39,11 @@ function SessionSettingSection(props){
                 return;
             }else if(response.status == 404){
                 setIssues(null);
-                setSelectorMessage('No issue has imcompleted task or no issue created yet.');
+                setSelectorSourceMessage('No issue has imcompleted task or no issue created yet.');
                 return;
             }
             else{
-                setSelectorMessage('Fetch avaliable issue failed in database.');
+                setSelectorSourceMessage('Fetch avaliable issue failed in database.');
                 console.error('Fetch avaliable issue failed, error:', result.error);
                 return;
             }
@@ -92,10 +93,10 @@ function SessionSettingSection(props){
                 console.log('Get all incompleted tasks succesffuly.');
                 return;
             }else if(response.status == 404){
-                setSelectorMessage('No incompleted tasks.');
+                setSelectorTaskMessage('No incompleted tasks.');
                 return;
             }else{
-                setSelectorMessage('etch all incompleted tasks failed.');
+                setSelectorTaskMessage('Fetch all incompleted tasks failed.');
                 console.error('etch all incompleted tasks failed, error:' ,result.error);
                 return;
             }
@@ -127,11 +128,11 @@ function SessionSettingSection(props){
                 console.log('Fetch incompleted tasks belong to issue succesffully.');
                 return;
             }else if(response.status == 404){
-                setSelectorMessage('No avaliable tasks in this issue.');
+                setSelectorTaskMessage('No avaliable tasks in this issue.');
                 console.error('Fetch avaliable task failed, error:', result.error);
                 return;
             }else{
-                setSelectorMessage('Fetch avaliable task failed.');
+                setSelectorTaskMessage('Fetch avaliable task failed.');
                 console.error('Fetch avaliable task failed, error:', result.error);
                 return;
             }
@@ -191,8 +192,9 @@ function SessionSettingSection(props){
     return(
         <div className="w-full flex flex-col">
             <p className="text-sm text-alter text-center">{message}</p>
-            <p className="text-sm text-alter text-start">{selectorMessage}</p>
+            
             <div className="w-full flex flex-col justify-center items-center space-y-3">
+                <p className="text-sm text-alter text-start">{selectorSourceMessage}</p>
                 <div className="w-full">
                     <p className="text-base font-bold text-black">Select Task Source:</p>
                     <p className="text-sm font-normal text-shadow">(Choose from All Tasks or a Specific Issue)</p>
@@ -209,6 +211,7 @@ function SessionSettingSection(props){
                 </div>
 
                 <div className="w-full">
+                    <p className="text-sm text-alter text-start">{selectorTaskMessage}</p>
                     <p className="text-base font-bold text-black">Select Task in Scope:</p>
                     <select onChange={handleSelectTask}
                     className="w-full bg-white text-center border-2 border-primary rounded-md py-2 px-3 sm:text-base text-sm h-full">
